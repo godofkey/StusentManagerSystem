@@ -6,4 +6,26 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>sms-api</artifactId>
+  <dependencies>
+   <!--强大的lombok插件-->
+      <dependency>
+           <groupId>org.projectlombok</groupId>
+           <artifactId>lombok</artifactId>
+       </dependency>
+  </dependencies>
+<build>
+	<plugins>
+		<!-- 设置编译版本为1.8 -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+ 
+	</plugins>
+</build>
 </project>
