@@ -2,6 +2,7 @@ package com.dreamworks.sms.teacher.controller;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dreamworks.sms.teacher.dto.Dept;
+import com.dreamworks.sms.teacher.po.Depttest;
 import com.dreamworks.sms.teacher.service.deptService;
 
 
@@ -33,7 +35,14 @@ public class DeptController {
 	@RequestMapping(value = "/dept/list")
 	public List<Dept> list() {
 		// TODO Auto-generated method stub
+		ModelMapper modelMapper = new ModelMapper();
+		Dept dept = new Dept((long) 1212234, "111111", "22222");
+		Depttest depttest = modelMapper.map(dept,Depttest.class);
+		
+		System.out.println("=========================="+depttest);
 		return deptService.list();
 	}
+	
+	
 	
 }
