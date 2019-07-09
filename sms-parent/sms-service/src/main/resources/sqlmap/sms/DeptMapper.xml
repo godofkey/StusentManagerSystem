@@ -8,8 +8,6 @@
     *
     from dept where deptno=#{deptno};
    </select>
-   
-   
     <select id="findAll" resultType="Dept">
     select 
     *

@@ -38,8 +38,6 @@ public class DeptController {
 		ModelMapper modelMapper = new ModelMapper();
 		Dept dept = new Dept((long) 1212234, "111111", "22222");
 		Depttest depttest = modelMapper.map(dept,Depttest.class);
-		
-		System.out.println("=========================="+depttest);
 		return deptService.list();
 	}
 	
