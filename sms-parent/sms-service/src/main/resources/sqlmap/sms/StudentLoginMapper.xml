@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dreamworks.sms.student.dao.StudentLoginMapper">
+   
+   <resultMap type="com.dreamworks.sms.student.po.StudentPo" id="BaseResultMap">
+     <id column="student_id" property="studentId" />
+     <result column="sno" property="sno" />
+     <result column="spwd" property="spwd" />
+     <result column="sname" property="sname" />
+     <result column="ssex" property="ssex" /> 
+     <result column="sbirthday" property="sbirthday" /> 
+     <result column="saddress" property="saddress" />
+     <result column="tno" property="tno" />
+     <result column="pno" property="pno" /> 
+     <result column="sclass" property="sclass" /> 
+	     <association property="teacherPo" javaType="com.dreamworks.sms.teacher.po.TeacherPo">
+	         <id column="teacher_id" property="teacherId" />
+		     <result column="tpwd" property="tpwd" />
+		     <result column="tname" property="tname" />
+		     <result column="tno" property="tno" />
+	     </association>
+   </resultMap>
+   
+    <sql id="Base_Column_List1">
+    ${alias}.student_id,${alias}.sno,${alias}.spwd,${alias}.sname,${alias}.ssex,${alias}.sbirthday,${alias}.saddress,${alias}.tno,${alias}.pno,${alias}.sclass
+    </sql>
+    
+    <sql id="Base_Column_List2">
+    ${alias}.teacher_id,${alias}.tpwd,${alias}.tname,${alias}.tno
+    </sql>
+   
+   <select id="findStudentBySno" resultMap="BaseResultMap">
+    select 
+      <include refid="Base_Column_List1"><property name="alias" value="t1"/></include>,
+      <include refid="Base_Column_List2"><property name="alias" value="t2"/></include>
+      from student_info t1 , teacher_info t2 where sno=#{sno} and t1.tno = t2.tno 
+   </select>
+   
+</mapper>
