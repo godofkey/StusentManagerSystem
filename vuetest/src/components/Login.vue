@@ -89,15 +89,13 @@ export default {
 
   methods: {
     ToHome() {
-      if (this.radio == 3) {
-       
-      this.Axios.post("http://localhost:8001/student/findStudentBySno",{
-        header:("Access-Control-Allow-Origin:*"), 
-        params:{
-        sno:this.formLabelAlign.name,
-        spwd:this.formLabelAlign.password
-        }
-      }).then((res)=>{
+      if (this.radio == 3) {      
+      var params = new URLSearchParams();
+      params.append('sno', this.formLabelAlign.name);
+      params.append('spwd',this.formLabelAlign.password);
+      this.Axios.post("http://localhost:8001/student/findStudentBySno", 
+       params
+      ).then((res)=>{
         console.log(res.data.message);
       },res=>{
         console.log("请输入正确的账号和密码")

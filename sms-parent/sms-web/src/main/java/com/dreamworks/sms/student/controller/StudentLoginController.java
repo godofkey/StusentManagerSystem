@@ -28,7 +28,7 @@ public class StudentLoginController {
 	
 	@RequestMapping(value = "/findStudentBySno", method = RequestMethod.POST)
     public JsonResult findStudentBySno(StudentQueryDto studentQueryDto) {
- 
+        System.out.println(studentQueryDto + "++++++++++++++++++");
     	StudentDto studentDto = studentLoginService.findStudentBySno(studentQueryDto);
     	Subject subject = SecurityUtils.getSubject();  
 		UsernamePasswordToken token = new UsernamePasswordToken(studentQueryDto.getSno(),studentQueryDto.getSpwd());
