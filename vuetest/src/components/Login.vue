@@ -19,23 +19,33 @@
           ref="ruleForm"
         >
           <el-form-item label="用户名" prop="name" style="margin:50px 0; ">
-            <el-input v-model="formLabelAlign.name" style="min-width:340px;" ref="name"  placeholder="请输入学生学号/教师工号/管理员账号"></el-input>
+            <el-input
+              v-model="formLabelAlign.name"
+              style="min-width:340px;"
+              ref="name"
+              placeholder="请输入学生学号/教师工号/管理员账号"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="密码"  prop="password">
-            <el-input v-model="formLabelAlign.password" style="min-width:340px" type="password"   placeholder="请输入密码"></el-input>
+          <el-form-item label="密码" prop="password">
+            <el-input
+              v-model="formLabelAlign.password"
+              style="min-width:340px"
+              type="password"
+              placeholder="请输入密码"
+            ></el-input>
           </el-form-item>
 
           <!-- 角色登陆分类 -->
           <el-radio-group v-model="radio">
             <el-radio :label="3">学生</el-radio>
-            
+
             <el-radio :label="6">教师</el-radio>
             <el-radio :label="9">管理员</el-radio>
           </el-radio-group>
 
           <!-- 提交表单 -->
           <el-form-item style=" position: relative;top: 20px;">
-            <el-button type="primary" @click="ToHome()"  >登陆</el-button>
+            <el-button type="primary" @click="ToHome()">登陆</el-button>
             <el-button>重置</el-button>
           </el-form-item>
         </el-form>
@@ -52,10 +62,7 @@
 </template>
 
 <script>
-
-
-
-import store from '../vuex/store.js';
+import store from "../vuex/store.js";
 export default {
   data() {
     return {
@@ -64,16 +71,16 @@ export default {
       formLabelAlign: {
         name: "",
         region: "",
-        password:"",
+        password: ""
       },
       rules: {
         name: [
           { required: true, message: "请输入您的名字", trigger: "blur" },
           { min: 2, max: 4, message: "长度在 2 到 4 个字符", trigger: "blur" }
         ],
-         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-        //   { min: 4, max: 16, message: "长度在  到 4 个字符", trigger: "blur" }
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" }
+          //   { min: 4, max: 16, message: "长度在  到 4 个字符", trigger: "blur" }
         ]
       }
     };
@@ -82,23 +89,32 @@ export default {
 
   methods: {
     ToHome() {
-      if(this.radio==3){
-        this.$router.push({ path: "home/studentselect" });
-      }
-      else if(this.radio==6){
+      if (this.radio == 3) {
+       
+      this.Axios.post("http://localhost:8001/student/findStudentBySno",{
+        header:("Access-Control-Allow-Origin:*"), 
+        params:{
+        sno:this.formLabelAlign.name,
+        spwd:this.formLabelAlign.password
+        }
+      }).then((res)=>{
+        console.log(res.data.message);
+      },res=>{
+        console.log("请输入正确的账号和密码")
+      })
+       
+      } else if (this.radio == 6) {
         this.$router.push({ path: "teacher" });
-      }else{
+      } else {
         this.$router.push({ path: "manage" });
       }
-      
 
       // this.$store.commit('login',this.formLabelAlign.name);
 
-      localStorage.setItem('name',JSON.stringify( this.formLabelAlign.name));
+      localStorage.setItem("name", JSON.stringify(this.formLabelAlign.name));
 
       // console.log(data);
-    },
-    
+    }
   }
 };
 </script>

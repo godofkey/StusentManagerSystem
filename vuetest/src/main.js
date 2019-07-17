@@ -6,6 +6,11 @@ import router from './router'
 import ElementUI from 'element-ui';
 import store from './vuex/store.js'
 
+//axios
+import Axios from 'axios'
+import Vueaxios from 'vue-axios';
+Vue.prototype.Axios=Axios
+
 
 import 'element-ui/lib/theme-chalk/index.css';
 
@@ -14,6 +19,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
+
+Vue.use(Vueaxios,Axios);
+
+
 
 /* eslint-disable no-new */
 new Vue({
