@@ -8,6 +8,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dreamworks.sms.resouce.JsonResult;
@@ -23,7 +24,7 @@ public class StudentLoginController {
 	@Autowired
 	private StudentLoginService studentLoginService;
 	
-	@RequestMapping("/findStudentBySno")
+	@RequestMapping(value = "/findStudentBySno", method = RequestMethod.POST)
     public JsonResult findStudentBySno(StudentQueryDto studentQueryDto) {
  
     	StudentDto studentDto = studentLoginService.findStudentBySno(studentQueryDto);

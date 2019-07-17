@@ -14,7 +14,7 @@ mybatis:
 spring:
     #数据源配置
   datasource:
-    url: jdbc:mysql://192.168.2.145:3306/studentmanagersystem
+    url: jdbc:mysql://192.168.2.144:3306/studentmanagersystem
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
