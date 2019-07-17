@@ -40,8 +40,8 @@ public class StudentLoginController {
 			// TODO: handle exception
 			return new JsonResult(ResultCode.NOT_DATA, "用户名不存在");
 		} catch (IncorrectCredentialsException e) {
-			// TODO: handle exception
-			return new JsonResult(ResultCode.FAIL, "密码错误");
+			
+			return new JsonResult(ResultCode.FAIL, "密码错误"); 
 		}
     			
     }
