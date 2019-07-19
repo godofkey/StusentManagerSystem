@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dreamworks.sms.student.dao.StudentLoginMapper">
+    
+
+    <resultMap id="BaseResultMap" type="com.dreamworks.sms.teacher.po.TeacherPo">
+        <id column="teacher_id" property="teacherId" />
+        <result column="tno" property="tno" />
+        <result column="tpwd" property="tpwd" />
+        <result column="tname" property="tname" />
+        <result column="ttag" property="ttag" />
+    </resultMap>
+
+    <sql id="Base_Column_List_findTeacherByTno">
+         ${alias}.teacher_Id,${alias}.tno,${alias}.tpwd,${alias}.tname,${alias}.ttag
+    </sql>
+
+    <select id="findStudentBySno" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List_findTeacherByTno"><property name="alias" value="tteacher" /></include>
+        from teacher_info where tno=#{tno}
+    </select>
+</mapper>

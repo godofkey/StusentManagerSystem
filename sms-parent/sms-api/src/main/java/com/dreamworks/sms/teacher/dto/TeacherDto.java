@@ -18,13 +18,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class TeacherDto implements Serializable{
 
-    private int tno;
+	private int tno;
 	
 	private String tpwd;
-	
-	private String tname;
-	
-	private int teacherId;
-		
+	//身份识别
+	private int ttag;
+
 	private int radio;
 }

@@ -10,7 +10,6 @@ import com.dreamworks.sms.student.dto.StudentQueryDto;
 import com.dreamworks.sms.student.po.StudentPo;
 import com.dreamworks.sms.student.service.StudentLoginService;
 import com.dreamworks.sms.teacher.dto.TeacherDto;
-import com.dreamworks.sms.teacher.po.Depttest;
 
 @Service
 public class StudentLoginServiceImpl implements StudentLoginService{

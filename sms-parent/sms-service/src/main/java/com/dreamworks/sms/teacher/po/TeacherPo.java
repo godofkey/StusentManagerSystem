@@ -24,6 +24,8 @@ public class TeacherPo implements Serializable{
 	private String tpwd;
 	
 	private String tname;
-	
+
+	private int ttag;
+
 	private int teacherId;
 }
