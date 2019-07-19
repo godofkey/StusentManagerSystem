@@ -20,7 +20,7 @@
         >
           <el-form-item label="用户名" prop="name" style="margin:50px 0; ">
             <el-input
-              v-model="formLabelAlign.name"
+              v-model="formLabelAlign.studentId"
               style="min-width:340px;"
               ref="name"
               placeholder="请输入学生学号/教师工号/管理员账号"
@@ -69,9 +69,12 @@ export default {
       radio: 3,
       labelPosition: "right",
       formLabelAlign: {
-        name: "",
+        studentId: "",
         region: "",
         password: ""
+      },
+      data:{
+        sname:""
       },
       rules: {
         name: [
@@ -89,29 +92,34 @@ export default {
 
   methods: {
     ToHome() {
-      if (this.radio == 3) {
-       
-      this.Axios.post("http://localhost:8001/student/findStudentBySno",{
-        header:("Access-Control-Allow-Origin:*"), 
-        params:{
-        sno:this.formLabelAlign.name,
-        spwd:this.formLabelAlign.password
+     if (this.radio == 3) {      
+      var params = new URLSearchParams();
+      params.append('sno', this.formLabelAlign.studentId);
+      params.append('spwd',this.formLabelAlign.password);
+      this.Axios.post("http://localhost:8001/student/findStudentBySno", 
+       params
+      ).then((res)=>{
+        if(res.data.code==200){
+          this.data.sname==res.data.data.name;
+           this.$router.push({ path: "home/studentselect" });
+          // console.log(this.data.sname)
+          //  console.log(res.data.data.sname)
+        }else{
+          alert("账号或者密码错误")
         }
-      }).then((res)=>{
-        console.log(res.data.message);
       },res=>{
-        console.log("请输入正确的账号和密码")
+        this.$router.push({ path: "home/studentselect" });
       })
        
       } else if (this.radio == 6) {
-        this.$router.push({ path: "teacher" });
+        this.$router.push({ path: "teacher/enteringgrade" });
       } else {
         this.$router.push({ path: "manage" });
       }
 
       // this.$store.commit('login',this.formLabelAlign.name);
 
-      localStorage.setItem("name", JSON.stringify(this.formLabelAlign.name));
+      localStorage.setItem("name", JSON.stringify(this.data.sname));
 
       // console.log(data);
     }
@@ -135,7 +143,7 @@ export default {
 
     position: relative;
 
-    left: 20rem;
+    left: 30%;
 
     color: #ffff;
   }

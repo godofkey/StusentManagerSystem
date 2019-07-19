@@ -2,12 +2,28 @@
   <div>
     <el-container>
       <el-header>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="考试场次">
+        <el-form
+          :inline="true"
+          :model="formInline"
+          class="demo-form-inline"
+          :rules="rules"
+          ref="ruleForm"
+        >
+          <el-form-item
+            label="考试场次"
+            :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+    ]"
+          >
             <el-input v-model="formInline.examsession" placeholder="考试场次"></el-input>
           </el-form-item>
 
-          <el-form-item label="科目">
+          <el-form-item
+            label="科目"
+            :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+    ]"
+          >
             <el-select v-model="formInline.region" placeholder="科目">
               <el-option label="语文" value="语文"></el-option>
               <el-option label="数学" value="数学"></el-option>
@@ -44,17 +60,17 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="onSubmit()">添加</el-button>
+            <el-button type="primary" @click="onSubmit()" title="添加到下方暂存区">添加</el-button>
 
-            <el-button type="primary" :loading="istrue" @click="changeTrue()">提交</el-button>
+            <el-button type="primary" :loading="istrue" @click="changeTrue()" title="提交到成绩管理区">提交</el-button>
           </el-form-item>
         </el-form>
       </el-header>
 
       <el-main>
         <el-table
-        v-loading="loading"
-            :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)" 
+          v-loading="loading"
+          :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
           style="width: 100%"
           :default-sort="{prop: 'grade', order: 'descending'}"
         >
@@ -64,16 +80,15 @@
           <el-table-column prop="grade" label="成绩" sortable width="225"></el-table-column>
         </el-table>
 
-
-       <el-pagination
-                            @size-change="handleSizeChange"
-                            @current-change="handleCurrentChange"
-                            :current-page="currentPage"
-                            :page-sizes="[5,9]" 
-                            :page-size="pagesize"        
-                            layout="total, sizes, prev, pager, next, jumper"
-                            :total="tableData.length">   
-                    </el-pagination>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[5,9]"
+          :page-size="pagesize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="tableData.length"
+        ></el-pagination>
       </el-main>
     </el-container>
   </div>
@@ -85,34 +100,43 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
-      currentPage:1, //初始页
-                pagesize:9,    //    每页的数据
-                userList: [],
+      currentPage: 1, //初始页
+      pagesize: 9, //    每页的数据
+      userList: [],
       formInline: {
         user: "",
         region: "",
         grade: "",
         examsession: ""
       },
+      rules: {
+        examsession: [
+          { required: true, message: "请输入考试场次", trigger: "blur" }
+        ],
+        region: [
+          { required: true, message: "请输入科目", trigger: "blur" }
+          //   { min: 4, max: 16, message: "长度在  到 4 个字符", trigger: "blur" }
+        ]
+      },
 
       tableData: [],
       sheetName: [],
-      istrue:false,
-      loading:false
+      istrue: false,
+      loading: false
     };
   },
-  
+
   methods: {
     //分页
-    handleSizeChange: function (size) {
-                this.pagesize = size;
-                console.log(this.pagesize)  //每页下拉显示数据
-        },
-        handleCurrentChange: function(currentPage){
-                this.currentPage = currentPage;
-                console.log(this.currentPage)  //点击第几页
-        },
-    
+    handleSizeChange: function(size) {
+      this.pagesize = size;
+      console.log(this.pagesize); //每页下拉显示数据
+    },
+    handleCurrentChange: function(currentPage) {
+      this.currentPage = currentPage;
+      console.log(this.currentPage); //点击第几页
+    },
+
     //读取excel文件
     onSubmit() {
       // this.tableData.push({
@@ -195,12 +219,14 @@ export default {
         // reader.readAsBinaryString(file) // 传统input方法
       });
     },
-    changeTrue(){
-      this.istrue=true;
-      this.loading=true;
+    changeTrue() {
+      if (this.formInline.examsession == "" || this.formInline.region == "") {
+      }
+      this.istrue = true;
+      this.loading = true;
     }
   },
-  
+
   mounted() {
     this.sheetName == 0;
   }
