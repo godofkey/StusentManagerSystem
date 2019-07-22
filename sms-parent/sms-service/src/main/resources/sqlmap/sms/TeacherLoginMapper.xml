@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dreamworks.sms.student.dao.StudentLoginMapper">
+<mapper namespace="com.dreamworks.sms.teacher.dao.TeacherLoginMapper">
     
 
     <resultMap id="TeacherLoginMap" type="com.dreamworks.sms.teacher.po.TeacherPo">
@@ -11,10 +11,8 @@
         <result column="ttag" property="ttag" />
     </resultMap>
 
-
-    <!--suppress MybatisMapperXmlInspection -->
-    <select id="findTeacherByTno" resultMap="BaseResultMap">
-        select t.*
+    <select id="findTeacherByTno" resultMap="TeacherLoginMap">
+        select  *
         from teacher_info t
         where t.tno=#{tno}
     </select>
