@@ -2,18 +2,18 @@
   <div id="studenthorizontal">
     <div class="title">xx班最近五次考试各科平均成绩横向对比图</div>
 
-    <el-row :gutter="20" v-for="(item,key) in formData" :key="key" >
-        <!-- 语文成绩对比图 -->
+    <el-row :gutter="20" v-for="(item,key) in formData" :key="key"  >
+        <!-- 成绩对比图 -->
       <el-col :span="6">
-        <div class="grid-content bg-purple" @click="aa(key)">
+        <div class="grid-content bg-purple" @click="dialogTableVisibleChange(key)">
           <span>{{item}}+{{key}}</span>
         </div>
       </el-col>
     
-      <el-dialog  :visible.sync="dialogTableVisible[key].col"  @open="open(key)" >
-        <div id="echartContainer" style="width:500px;height:500px"></div>
+      <el-dialog  :visible.sync="dialogTableVisible[key].col"  :close-on-click-modal="false" >
+        <div id="echartContainer" style="width:500px;height:500px">aaaa</div>
       </el-dialog>
-     <!-- 数学成绩对比图 -->
+   
       
     </el-row>
   </div>
@@ -59,10 +59,10 @@ export default {
           data:[12, 36,56,82,99] 
         },
         {
-          data:[12, 36,56,82,99] 
+          data:[22, 36,26,22,29] 
         },
         {
-          data:[12, 36,56,82,99] 
+          data:[42, 56,86,42,39] 
         },
         {
           data:[12, 36,56,82,99] 
@@ -89,10 +89,24 @@ export default {
   },
   methods: {
     dialogTableVisibleChange(key) {
+    
       
-     
+this.dialogTableVisible[key].col = true;
 
-      var myChart = echarts.init(document.getElementById("echartContainer"));
+       setTimeout(() => {
+      
+  var myChart = document.getElementById("echartContainer");
+
+
+
+
+
+  var myChart01=echarts.init(myChart)
+      
+        // console.log(myChart01);
+  //  console.log(myChart01.id);
+      
+
 
       // 指定图表的配置项和数据
       var option = {
@@ -115,32 +129,36 @@ export default {
           }
         ]
       };
-          console.log(myChart);
+      console.log(myChart01)
+          console.log(myChart01._chartsViews[0]);
+            
       //使用刚指定的配置项和数据显示图表。
-      myChart.setOption(option);
+      myChart01.setOption(option);
       
-
-    },aa(key){
-      this.dialogTableVisible[key].col = true;
-      // console.log(key)
-     
-      
-    },
-    open(key){
-      const t = this;
-  setTimeout(() => {
-    //  执行echarts画图方法
-    t.dialogTableVisibleChange(key);
+      // myChart._chartsViews=;
   }, 0);
+      
+   
+    //   console.log(myChart.id.split("")[15]++);
+     
+       
     }
+    
+  //   open(key){
+  //     const t = this;
+  // setTimeout(() => {
+  //   //  执行echarts画图方法
+  //   t.dialogTableVisibleChange(key);
+  // }, 0);
+  //   }
   },
   mounted(){
-     
+    
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .title {
   line-height: 100px;
   font-size: 25px;

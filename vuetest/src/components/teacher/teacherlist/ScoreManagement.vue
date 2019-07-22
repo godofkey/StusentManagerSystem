@@ -3,8 +3,8 @@
         <p class="grade_manage">223班第一次月考成绩</p>
         <el-table class="tb-edit" highlight-current-row :data="tableData" style="width: 100%;line-height:100px;">
 
-            <template v-for="col in cols">
-                <el-table-column  :prop="col.prop" :label="col.label"></el-table-column>
+            <template v-for="(col,index) in cols">
+                <el-table-column  :prop="col.prop" :label="col.label" :key="index" ></el-table-column>
                 <!-- <el-table-column v-if="col.type==='sort'" :prop="col.prop" sortable :label="col.label">
                     <template scope="scope">
                         <el-tag type="primary">{{ scope.row.type }}</el-tag>
@@ -29,6 +29,7 @@ export default {
                 { label: "化学", prop: "huaxue", type: "normal" }
 
             ],
+            key:'',
             tableData: [
                 {
                    
