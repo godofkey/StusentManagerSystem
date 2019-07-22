@@ -1,11 +1,13 @@
 server:
-  port: 8001
+  port: 8081
    
 mybatis:
   #实体类所做包
-  type-aliases-package: com.dreamworks.sms.teacher.dto
+#  type-aliases-package: com.dreamworks.sms.teacher.dto
   #mapper.xml所在位置
-  mapper-locations: classpath:sqlmap/sms/*.xml 
+  mapper-locations: classpath:sqlmap/sms/*.xml
+
+
   
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -14,9 +16,9 @@ mybatis:
 spring:
     #数据源配置
   datasource:
-    url: jdbc:mysql://192.168.2.144:3306/studentmanagersystem
+    url: jdbc:mysql://localhost:3306/student_manager_system
     username: root
-    password: root
+    password: aaaa
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     

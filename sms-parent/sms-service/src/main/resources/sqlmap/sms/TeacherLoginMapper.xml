@@ -3,21 +3,19 @@
 <mapper namespace="com.dreamworks.sms.student.dao.StudentLoginMapper">
     
 
-    <resultMap id="BaseResultMap" type="com.dreamworks.sms.teacher.po.TeacherPo">
-        <id column="teacher_id" property="teacherId" />
+    <resultMap id="TeacherLoginMap" type="com.dreamworks.sms.teacher.po.TeacherPo">
+        <id column="teacher_Id" property="teacherId" />
         <result column="tno" property="tno" />
         <result column="tpwd" property="tpwd" />
         <result column="tname" property="tname" />
         <result column="ttag" property="ttag" />
     </resultMap>
 
-    <sql id="Base_Column_List_findTeacherByTno">
-         ${alias}.teacher_Id,${alias}.tno,${alias}.tpwd,${alias}.tname,${alias}.ttag
-    </sql>
 
-    <select id="findStudentBySno" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List_findTeacherByTno"><property name="alias" value="tteacher" /></include>
-        from teacher_info where tno=#{tno}
+    <!--suppress MybatisMapperXmlInspection -->
+    <select id="findTeacherByTno" resultMap="BaseResultMap">
+        select t.*
+        from teacher_info t
+        where t.tno=#{tno}
     </select>
 </mapper>
