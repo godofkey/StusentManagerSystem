@@ -1,14 +1,14 @@
 package com.dreamworks.sms.teacher.service.impl;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.dreamworks.sms.teacher.dao.TeacherLoginMapper;
 import com.dreamworks.sms.teacher.dto.TeacherDto;
 import com.dreamworks.sms.teacher.dto.TeacherQueryDto;
 import com.dreamworks.sms.teacher.po.TeacherPo;
 import com.dreamworks.sms.teacher.service.TeacherLoginService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 
 /**
  * @ClassName: TeacherLoginServiceImpl
@@ -26,7 +26,7 @@ public class TeacherLoginServiceImpl implements TeacherLoginService{
     @Override
     public TeacherDto findTeacherByTno(TeacherQueryDto teacherQueryDto){
 
-        TeacherPo teacherPo=teacherLoginMapper.findTeacherByTno(teacherQueryDto);
+        TeacherPo teacherPo = teacherLoginMapper.findTeacherByTno(teacherQueryDto);
         if(teacherPo!=null){
             ModelMapper modelMapper=new ModelMapper();
             TeacherDto tDto=modelMapper.map(teacherPo,TeacherDto.class);

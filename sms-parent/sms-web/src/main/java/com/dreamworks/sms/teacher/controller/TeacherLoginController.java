@@ -1,10 +1,6 @@
 package com.dreamworks.sms.teacher.controller;
 
-import com.dreamworks.sms.resouce.JsonResult;
-import com.dreamworks.sms.resouce.ResultCode;
-import com.dreamworks.sms.teacher.dto.TeacherDto;
-import com.dreamworks.sms.teacher.dto.TeacherQueryDto;
-import com.dreamworks.sms.teacher.service.TeacherLoginService;
+
 import org.apache.shiro.SecurityUtils;
 
 

@@ -3,7 +3,7 @@ server:
    
 mybatis:
   #实体类所做包
-#  type-aliases-package: com.dreamworks.sms.teacher.dto
+  #type-aliases-package: com.dreamworks.sms.teacher.dto
   #mapper.xml所在位置
   mapper-locations: classpath:sqlmap/sms/*.xml
 
