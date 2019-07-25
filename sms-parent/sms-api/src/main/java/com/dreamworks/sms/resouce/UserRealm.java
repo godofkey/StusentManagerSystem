@@ -61,8 +61,7 @@ public class UserRealm extends AuthorizingRealm{
         StudentDto u = studentLoginService.findStudentBySno(studentQueryDto);
 		if(u==null) {
 			return null;	
-		}
-		
+		}	
 		return new SimpleAuthenticationInfo(studentQueryDto,u.getSpwd(),getName());
 		
 	}

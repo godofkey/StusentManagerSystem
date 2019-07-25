@@ -12,6 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dreamworks.sms.resouce.JsonResult;
+import com.dreamworks.sms.resouce.ResultCode;
+import com.dreamworks.sms.teacher.dto.TeacherDto;
+import com.dreamworks.sms.teacher.dto.TeacherQueryDto;
+import com.dreamworks.sms.teacher.service.TeacherLoginService;
+
 
 
 /**
