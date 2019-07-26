@@ -52,12 +52,12 @@
       </div>
     </div>
 
-    <footer class="login_footer">
+    <el-footer class="login_footer">
       <el-divider></el-divider>
       <span>Copyright © 2013 - 2018 Geographic information dreamworks.</span>
 
       <span class="login_footer_span2">技术支持：浙江地信梦工场孵化器有限公司</span>
-    </footer>
+    </el-footer>
   </div>
 </template>
 
@@ -96,7 +96,7 @@ export default {
       var params = new URLSearchParams();
       params.append('sno', this.formLabelAlign.studentId);
       params.append('spwd',this.formLabelAlign.password);
-      this.Axios.post("http://localhost:8001/student/findStudentBySno", 
+      this.Axios.post("http://localhost:8081/student/findStudentBySno", 
        params
       ).then((res)=>{
         if(res.data.code==200){
@@ -165,8 +165,8 @@ export default {
 }
 
 .login_footer {
-  position: fixed;
-  bottom: 70px;
+  position: absolute;
+  bottom: 5%;
   /* display: flex; */
   left: 23rem;
 }

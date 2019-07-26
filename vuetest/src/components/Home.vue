@@ -9,8 +9,22 @@
             Hi {{username}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
+
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>身份验证</el-dropdown-item>
+            <el-popover placement="right" width="400" trigger="click">
+              <div class="verification">
+                <el-input
+                  v-model="input"
+                  placeholder="请绑定您的班级"
+                  :disabled="isdisabled"
+                  style="margin: 20px;
+                        width: 80%"
+                ></el-input>
+                <el-button @click="ChangeDisabled()" style=" margin: 20px;">确认绑定</el-button>
+                <el-button @click="isdisabled = false">解除绑定</el-button>
+              </div>
+              <el-dropdown-item slot="reference">身份验证</el-dropdown-item>
+            </el-popover>
             <template>
               <el-dropdown-item>
                 <el-button type="text" @click="dialogFormVisible = true">修改密码</el-button>
@@ -20,35 +34,6 @@
             <el-dropdown-item divided command="login">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-
-        <div class="el-dialog">
-          <el-dialog title="修改密码" :visible.sync="dialogFormVisible" class="el-dialog-tim" :close-on-click-modal="false">
-            <el-form
-              :model="ruleForm"
-              status-icon
-              :rules="rules"
-              ref="ruleForm"
-              label-width="100px"
-              class="demo-ruleForm"
-              
-            >
-            <el-form-item label="原密码" prop="age" type="password" >
-                <el-input v-model="ruleForm.age" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="新密码" prop="pass">
-                <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
-              </el-form-item>
-              <el-form-item label="确认密码" prop="checkPass">
-                <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
-              </el-form-item>
-              
-              <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-                <el-button @click="resetForm('ruleForm')">重置</el-button>
-              </el-form-item>
-            </el-form>
-          </el-dialog>
-        </div>
       </el-header>
 
       <!-- main主体 -->
@@ -76,105 +61,135 @@
           <router-view></router-view>
         </el-main>
       </el-container>
+
+      <!-- 修改密码对话框 -->
+    
+        <el-dialog title="修改密码" :visible.sync="dialogFormVisible" :close-on-click-modal="false" style="width:60%;left:20%">
+          <el-form
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            label-width="100px"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="原密码" prop="age" type="password">
+              <el-input v-model="ruleForm.age" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="新密码" prop="pass">
+              <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="checkPass">
+              <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+              <el-button @click="resetForm('ruleForm')">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
+     
     </el-container>
   </div>
 </template>
 
 <script>
 import store from "../vuex/store.js";
+import StudentSelect from "../components/studentList/StudentSelect.vue";
 
 export default {
   data() {
-     var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('密码不能为空'));
-        }else{
-          callback();
+    var checkAge = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("密码不能为空"));
+      } else {
+        callback();
+      }
+    };
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入新密码"));
+      } else {
+        if (this.ruleForm.checkPass !== "") {
+          this.$refs.ruleForm.validateField("checkPass");
         }
-        // setTimeout(() => {
-        //   if (!Number.isInteger(value)) {
-        //     callback(new Error('请输入数字值'));
-        //   } else {
-        //     if (value < 18) {
-        //       callback(new Error('必须年满18岁'));
-        //     } else {
-        //       callback();
-        //     }
-        //   }
-        // }, 1000);
-      };
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入新密码'));
-        } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.ruleForm.pass) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
-      activeIndex: "1",
-      activeIndex2: "1",
+     
       username: "",
       dialogFormVisible: false,
-      form: {
-        lastpassword: "",
-        newpassword: "",
-        confirmpassword: ""
-      },
+     
       formLabelWidth: "120px",
-       ruleForm: {
-          pass: '',
-          checkPass: '',
-          age: ''
-        },
-        rules: {
-          pass: [
-            { validator: validatePass, trigger: 'blur', required:"true" }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur',required:"true" }
-          ],
-          age: [
-            { validator: checkAge, trigger: 'blur' ,required:"true"}
-          ]
-        }
-      
-    }
+      ruleForm: {
+        pass: "",
+        checkPass: "",
+        age: ""
+      },
+      input: "",
+      isdisabled: false,
+     
+      rules: {
+        pass: [{ validator: validatePass, trigger: "blur", required: "true" }],
+        checkPass: [
+          { validator: validatePass2, trigger: "blur", required: "true" }
+        ],
+        age: [{ validator: checkAge, trigger: "blur", required: "true" }]
+      }
+    };
   },
   store,
   methods: {
     handleCommand(command) {
       this.$router.push({ name: command });
     },
-    todo() {
-      console.log(this.$store.state.count);
-    },
+   
     submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
+      this.$refs[formName].validate(valid => {
+        this.resetForm(formName);
+        if (valid) {
+          this.$notify({
+          title: '修改成功',
+          message: '已成功修改密码',
+          type: 'success'
         });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+        this.dialogFormVisible = false;
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    ChangeDisabled() {
+      if (this.input == "") {
+        this.$message({
+          message: "请输入正确的班级信息",
+          type: "warning"
+        });
+      } else {
+        this.isdisabled = true;
       }
+    },
     
   },
+  components: {
+    "v-studentselect": StudentSelect
+  },
+
   mounted() {
     var name = JSON.parse(localStorage.getItem("name"));
     console.log(name);
@@ -185,6 +200,11 @@ export default {
 
 
 <style lang="scss" scoped>
+.verification {
+  width: 100%;
+}
+
+
 .el-header {
   background-color: #b3c0d1;
   color: #eee;
@@ -212,9 +232,6 @@ export default {
       text-decoration: none;
     }
   }
-}
-.el-dialog-tim{
-  width: 100%;
 }
 
 .el-main {
