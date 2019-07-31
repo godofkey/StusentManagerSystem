@@ -52,7 +52,7 @@
               <router-link to="/teacher/scoremanagement">成绩管理</router-link>
             </li>
 
-            <li>浏览成绩</li>
+            <!-- <li>浏览成绩</li> -->
             <li>更新成绩</li>
             <li>查询挂科学生</li>
             <li>成绩横向比较</li>
@@ -198,7 +198,7 @@ export default {
   color: #eee;
   text-align: center;
   line-height: 100px;
-  min-height: 100px;
+  min-height: 150px;
   background: #225177;
 }
 

@@ -19,6 +19,10 @@ import ScoreManagement from '@/components/teacher/teacherlist/ScoreManagement.vu
 
 import ManageHome from '@/components/manage/ManageHome.vue'
 
+import Authentication from '@/components/manage/Authentication.vue'
+
+import StudentManage from '@/components/manage/StudentManage.vue'
+
 
 Vue.use(Router)
 
@@ -51,7 +55,12 @@ export default new Router({
     {
       path: '/manage',
       name: 'manage',
-      component: ManageHome
+      component: ManageHome,
+      children:[
+        {path:'/manage/Authentication',component:Authentication},
+        {path:'/manage/StudentManage',component:StudentManage}
+
+      ]
     }
     
   ]
