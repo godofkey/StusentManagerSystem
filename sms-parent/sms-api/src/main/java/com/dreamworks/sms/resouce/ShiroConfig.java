@@ -1,8 +1,13 @@
 package com.dreamworks.sms.resouce;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,18 +45,40 @@ public class ShiroConfig {
 	
 	
 	@Bean("securityManager")
-	public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm")UserRealm userRealm) {
+	public DefaultWebSecurityManager getDefaultWebSecurityManager() {
 		DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-		defaultWebSecurityManager.setRealm(userRealm);
-		return defaultWebSecurityManager;
+		//设置realm.
+		defaultWebSecurityManager.setAuthenticator(modularRealmAuthenticator());
+        List<Realm> realms = new ArrayList<>();
+        //添加多个Realm
+        realms.add(studentRealm());
+        defaultWebSecurityManager.setRealms(realms);
+ 
+        return defaultWebSecurityManager;
 	}
 	
 	
-	
-	@Bean("userRealm")
-	public UserRealm getRealm() {
-		return new UserRealm();
+	@Bean(name = "teacherRealm")
+	public TeacherRealm teacherRealm() {
+		TeacherRealm teacherRealm = new TeacherRealm();
+		return teacherRealm;
 	}
+	
+	
+	@Bean(name = "studentRealm")
+    public StudentRealm studentRealm(){
+    	StudentRealm studentRealm = new StudentRealm();
+        return studentRealm;
+    }
+
+	@Bean
+    public ModularRealmAuthenticator modularRealmAuthenticator(){
+        //自己重写的ModularRealmAuthenticator
+        UserModularRealmAuthenticator modularRealmAuthenticator = new UserModularRealmAuthenticator();
+        modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
+        return modularRealmAuthenticator;
+    }
+
 	
 	
 }

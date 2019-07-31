@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dreamworks.sms.student.dao.StudentLoginMapper" >
+  <resultMap id="BaseResultMap" type="com.dreamworks.sms.student.po.StudentInfoPo" >
+    <id column="student_id" property="studentId" />
+    <result column="studnet_name" property="studnetName" />
+    <result column="sex" property="sex" />
+    <result column="birth" property="birth" />
+    <result column="adress" property="adress" />
+    <result column="class_id" property="classId" />
+    <result column="grade" property="grade" />
+    <result column="password" property="password" />
+	    <association property="classInfoPo" javaType="com.dreamworks.sms.classInfo.po.ClassInfoPo">
+	        <id column="class_id" property="classId" />
+			<result column="class_name" property="className" />
+			<result column="class_num" property="classNum" />
+			<result column="grade" property="grade" />
+	    </association>
+  </resultMap>
+ 
+ <sql id="Base_Column_List1">
+    ${alias}.student_id,${alias}.studnet_name,${alias}.sex,${alias}.birth,
+    ${alias}.adress,${alias}.class_id,${alias}.grade,${alias}.password,
+ </sql>
+ 
+ <sql id="Base_Column_List2">
+     ${alias}.class_name,${alias}.class_num,${alias}.grade
+ </sql>
+ 
+  <select id="findStudentByStudentId" resultMap="BaseResultMap">
+     select 
+     <include refid="Base_Column_List1"><property name="alias" value="t1"/></include>
+     <include refid="Base_Column_List2"><property name="alias" value="t2"/></include>
+     from student_info t1 , class_info t2 where t1.student_id = #{studentId} 
+     and t1.class_id = t2.class_id
+  </select>
+</mapper>

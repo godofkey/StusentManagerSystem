@@ -21,12 +21,9 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class TeacherQueryDto implements Serializable {
 
-    private int tno;
+    private String teacherId;
 
-    private String tpwd;
+    private String password;
 
-    private  int ttag;
-
-    private int radio;
-
+    private String loginType;
 }

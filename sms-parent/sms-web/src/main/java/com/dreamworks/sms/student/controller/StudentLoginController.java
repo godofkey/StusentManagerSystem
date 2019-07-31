@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dreamworks.sms.resouce.JsonResult;
 import com.dreamworks.sms.resouce.ResultCode;
+import com.dreamworks.sms.resouce.UserToken;
 import com.dreamworks.sms.student.dto.StudentDto;
+import com.dreamworks.sms.student.dto.StudentInfoDto;
 import com.dreamworks.sms.student.dto.StudentQueryDto;
 import com.dreamworks.sms.student.service.StudentLoginService;
 
@@ -26,16 +28,15 @@ public class StudentLoginController {
 	@Autowired
 	private StudentLoginService studentLoginService;
 	
-	@RequestMapping(value = "/findStudentBySno", method = RequestMethod.POST)
-    public JsonResult findStudentBySno(StudentQueryDto studentQueryDto) {
-        System.out.println(studentQueryDto + "++++++++++++++++++");
-    	StudentDto studentDto = studentLoginService.findStudentBySno(studentQueryDto);
+	@RequestMapping(value = "/findStudentByStudentId", method = RequestMethod.GET)
+    public JsonResult findStudentByStudentId(StudentQueryDto studentQueryDto) {
+        StudentInfoDto studentInfoDto = studentLoginService.findStudentByStudentId(studentQueryDto);
     	Subject subject = SecurityUtils.getSubject();  
-		UsernamePasswordToken token = new UsernamePasswordToken(studentQueryDto.getSno(),studentQueryDto.getSpwd());
+    	UserToken token = new UserToken(studentQueryDto.getStudentId(),studentQueryDto.getPassword(),"student");
     	try {
 			subject.login(token);
-			StudentDto sDto = studentLoginService.findStudentBySno(studentQueryDto);
-			return new JsonResult(ResultCode.SUCCESS, "登录成功", sDto);
+			StudentInfoDto studentInfoDto1 = studentLoginService.findStudentByStudentId(studentQueryDto);
+			return new JsonResult(ResultCode.SUCCESS, "登录成功", studentInfoDto1);
 		} catch (UnknownAccountException e) {
 			// TODO: handle exception
 			return new JsonResult(ResultCode.NOT_DATA, "用户名不存在");

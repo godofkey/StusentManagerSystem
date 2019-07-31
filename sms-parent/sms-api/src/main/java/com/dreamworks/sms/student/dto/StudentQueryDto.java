@@ -16,10 +16,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class StudentQueryDto implements Serializable{
 	
-	private String sno;
+	private String studentId;
 	
-	private String spwd;
+	private String password;
 	
-	private int radio;
-
+	private String loginType;
+	
 }

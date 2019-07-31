@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dreamworks.sms.teacher.dao.TeacherLoginMapper" >
+  <resultMap id="BaseResultMap" type="com.dreamworks.sms.teacher.po.TeacherInfoPo" >
+    <id column="teacher_id" property="teacherId" />
+    <result column="teahcer_name" property="teahcerName" />
+    <result column="birth" property="birth" />
+    <result column="adress" property="adress" />
+    <result column="class_id" property="classId" />
+    <result column="is_headmaster" property="isHeadmaster" />
+    <result column="course_id" property="courseId" />
+    <result column="password" property="password" />
+    <association property="courseInfoPo" javaType="com.dreamworks.sms.course.po.CourseInfoPo">
+	     <id column="course_id" property="courseId" />
+	    <result column="course_name" property="courseName" />
+	    <result column="course_hour" property="courseHour" />
+    </association>
+    <collection property="list" ofType="com.dreamworks.sms.classInfo.po.ClassInfoPo">
+	     <id column="class_id" property="classId"/>
+	    <result column="class_name" property="className"/>
+	    <result column="class_num" property="classNum" />
+	    <result column="grade" property="grade" />
+    </collection>
+  </resultMap>
+   <sql id="Base_Column_List1">
+   ${alias}.teacher_id ,${alias}.teahcer_name ,${alias}.birth ,${alias}.adress ,
+   ${alias}.class_id ,${alias}.is_headmaster ,${alias}.course_id ,${alias}.password,
+   </sql>
+   <sql id="Base_Column_List2">${alias}.course_name ,${alias}.course_hour,</sql>
+   <sql id="Base_Column_List3">${alias}.class_name ,${alias}.class_num ,${alias}.grade</sql>
+   <select id="findTeacherByTeacherId" resultMap="BaseResultMap">
+   select 
+   <include refid="Base_Column_List1">
+   <property name="alias" value="t1"/>
+   </include>
+   <include refid="Base_Column_List2">
+   <property name="alias" value="t2"/>
+   </include>
+   <include refid="Base_Column_List3">
+   <property name="alias" value="t3"/>
+   </include>
+   from teacher_info t1 , course_info t2 , class_info t3
+   <where>
+   <if test="teacherId != null">
+    t1.teacher_id = #{teacherId} and 
+   </if>
+   t1.class_id = t3.class_id and t1.course_id = t2.course_id
+   </where>
+   </select>
+</mapper>

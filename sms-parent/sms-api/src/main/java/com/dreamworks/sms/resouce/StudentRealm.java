@@ -16,11 +16,12 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dreamworks.sms.student.dto.StudentDto;
+import com.dreamworks.sms.student.dto.StudentInfoDto;
 import com.dreamworks.sms.student.dto.StudentQueryDto;
 import com.dreamworks.sms.student.service.StudentLoginService;
 
 
-public class UserRealm extends AuthorizingRealm{
+public class StudentRealm extends AuthorizingRealm{
 
 	@Autowired
 	private StudentLoginService studentLoginService; 
@@ -52,17 +53,17 @@ public class UserRealm extends AuthorizingRealm{
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		// TODO Auto-generated method stub
-		System.out.println("执行认证逻辑"+"======================");
-		UsernamePasswordToken token1 = (UsernamePasswordToken)token;
+		UserToken token1 = (UserToken)token;
 		StudentQueryDto studentQueryDto = new StudentQueryDto();
-		studentQueryDto.setSno(token1.getUsername());
-//		User user = new User();
-//		user.setUsername(token1.getUsername());
-        StudentDto u = studentLoginService.findStudentBySno(studentQueryDto);
+		studentQueryDto.setStudentId(token1.getUsername());
+  //		User user = new User();
+  //		user.setUsername(token1.getUsername());
+		StudentInfoDto u = studentLoginService.findStudentByStudentId(studentQueryDto);
+
 		if(u==null) {
 			return null;	
 		}	
-		return new SimpleAuthenticationInfo(studentQueryDto,u.getSpwd(),getName());
+		return new SimpleAuthenticationInfo(studentQueryDto,u.getPassword(),getName());
 		
 	}
 

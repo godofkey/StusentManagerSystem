@@ -1,6 +1,7 @@
 package com.dreamworks.sms.teacher.service;
 
 import com.dreamworks.sms.teacher.dto.TeacherDto;
+import com.dreamworks.sms.teacher.dto.TeacherInfoDto;
 import com.dreamworks.sms.teacher.dto.TeacherQueryDto;
 
 /**
@@ -11,6 +12,6 @@ import com.dreamworks.sms.teacher.dto.TeacherQueryDto;
  */
 public interface TeacherLoginService {
 
-    public TeacherDto findTeacherByTno(TeacherQueryDto teacherQueryDto);
+    public TeacherInfoDto findTeacherByTeacherId(TeacherQueryDto teacherQueryDto);
 
 }
