@@ -8,7 +8,7 @@
          {{item}}
         </div>
       </li>
-      <div id="echartContainer" style="width:500px;height:500px"></div>
+      <div id="echartContainer" style="width:500px;height:500px;left:30%"></div>
     </ul>
     
     
@@ -24,7 +24,7 @@ var echarts = require("echarts");
 export default {
   data() {
     return {
-      formData: ["语文", "数学", "外语", "物理", "化学", "地理","物理", "化学", "地理","语文", "数学", "外语", "物理"],
+      formData: ["语文", "数学", "外语", "物理", "化学", "地理",],
 
       dialogTableVisible: [
         {
@@ -81,24 +81,7 @@ export default {
         },
         {
           data: [12, 36, 56, 82, 99]
-        }, {
-          data: [12, 36, 56, 82, 99]
-        },
-        {
-          data: [12, 36, 56, 82, 99]
-        },
-        {
-          data: [12, 36, 56, 82, 99]
-        },
-        {
-          data: [22, 36, 26, 22, 29]
-        },
-        {
-          data: [42, 56, 86, 42, 39]
-        },
-        {
-          data: [12, 36, 56, 82, 99]
-        },
+        }
       ],
       form: {
         name: "",
