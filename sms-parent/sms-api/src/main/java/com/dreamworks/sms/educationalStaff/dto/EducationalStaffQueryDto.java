@@ -3,8 +3,7 @@ package com.dreamworks.sms.educationalStaff.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.dreamworks.sms.course.dto.CourseInfoDto;
-import com.dreamworks.sms.course.dto.CourseInfoDto.CourseInfoDtoBuilder;
+import com.dreamworks.sms.educationalStaff.dto.EducationalStaffInfoDto.EducationalStaffInfoDtoBuilder;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,16 +17,11 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Builder
 @Accessors(chain = true)
-public class EducationalStaffInfoDto implements Serializable{
-    
-	private Integer educationalStaffId;
+public class EducationalStaffQueryDto implements Serializable{
 
-    private String educationalStafName;
-
-    private Date birth;
-
-    private String adress;
-
-    private String password;
-
+	private String educationalStaffId;
+	
+	private String password;
+	
+	private String loginType;
 }
