@@ -13,3 +13,4 @@ sss-apps/pc-webapp/package.json
 sss-apps/pc-webapp/src/modules/orclearmanage/_components/newCleanRequestDialog.vue.rej
 sss-apps/package.json
 .externalToolBuilders
+pom.properties
