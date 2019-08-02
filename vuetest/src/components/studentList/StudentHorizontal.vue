@@ -1,17 +1,17 @@
 <template>
   <div id="studenthorizontal">
-    <div class="title">xx班最近五次考试各科平均成绩横向对比图</div>
+    
 
     <ul class="studenthorizontal_ul">
-      <li v-for="(item,key) in formData" @click="dialogTableVisibleChange(key)">
+      <li v-for="(item,key) in formData" @click="dialogTableVisibleChange(key)" class="aa">
         <div class="inner" >
          {{item}}
         </div>
       </li>
-      <div id="echartContainer" style="width:500px;height:500px;left:30%"></div>
+     
     </ul>
     
-    
+     <div id="echartContainer" style="width:500px;height:500px;left:30%"></div>
 
     <!-- <el-dialog    :close-on-click-modal="false" > -->
 
@@ -24,37 +24,12 @@ var echarts = require("echarts");
 export default {
   data() {
     return {
-      formData: ["语文", "数学", "外语", "物理", "化学", "地理",],
+      formData: ["语文", "数学", "外语", "物理", "化学", "地理","总分"],
 
-      dialogTableVisible: [
-        {
-          title: "语文",
-          col: false
-        },
-        {
-          title: "数学",
-          col: false
-        },
-        {
-          title: "英语",
-          col: false
-        },
-        {
-          title: "物理",
-          col: false
-        },
-        {
-          title: "化学",
-          col: false
-        },
-        {
-          title: "地理",
-          col: false
-        }
-      ],
+      
       dialogFormVisible: false,
       boxShow: true,
-      text: ["语文", "数学", "外语", "物理", "化学", "地理"],
+      text: ["语文", "数学", "外语", "物理", "化学", "地理","总分"],
       dataexamssion: [
         "第一次月考",
         "第二次月考",
@@ -81,7 +56,9 @@ export default {
         },
         {
           data: [12, 36, 56, 82, 99]
-        }
+        }, {
+          data: [42, 56, 86, 42, 39]
+        },
       ],
       form: {
         name: "",
@@ -224,5 +201,6 @@ export default {
       border-radius: 5%;
     }
   }
+ 
 }
 </style>

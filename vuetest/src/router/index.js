@@ -9,11 +9,11 @@ import StudentHorizontal from '@/components/studentList/StudentHorizontal.vue'
 
 import StudentLengthways from '@/components/studentList/StudentLengthways.vue'
 
-import  StudentSelect   from '@/components/studentList/StudentSelect.vue'
+// import  StudentSelect   from '@/components/studentList/StudentSelect.vue'
 
-import TeacherHome from '@/components/teacher/TeacherHome.vue'
+// import TeacherHome from '@/components/teacher/TeacherHome.vue'
 
-import EnteringGrade from '@/components/teacher/teacherlist/EnteringGrade.vue'
+// import EnteringGrade from '@/components/teacher/teacherlist/EnteringGrade.vue'
 
 import ScoreManagement from '@/components/teacher/teacherlist/ScoreManagement.vue'
 
@@ -23,6 +23,21 @@ import Authentication from '@/components/manage/Authentication.vue'
 
 import StudentManage from '@/components/manage/StudentManage.vue'
 
+import StudentHome from '@/components/student/StudentHome.vue'
+
+import StudentAuthentication from '@/components/student/StudentAuthentication.vue'
+
+import StudentChangePas from "@/components/student/StudentChangePas.vue"
+
+import StudentSelect from '@/components/student/StudentSelect.vue'
+
+import TeacherHome from '@/components/teacher01/TeacherHome.vue'
+
+import TeacherAuthentication from  '@/components/teacher01/TeacherAuthentication.vue'
+
+import TeacherChangepas from '@/components/teacher01/TeacherChangepas.vue'
+
+import ImportGrade from '@/components/teacher01/ImportGrade.vue'
 
 Vue.use(Router)
 
@@ -36,11 +51,14 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
-      component: Home,
+      redirect:'/home/studentselect',
+      component: StudentHome,
       children:[
         {path:'/home/studenthorizontal',component:StudentHorizontal},//学生成绩横向比较
         {path:'/home/studentLengthways',component:StudentLengthways},//学生成绩纵向比较
-        {path:'/home/studentselect',component:StudentSelect}//学生成绩查询
+        {path:'/home/studentselect',component:StudentSelect},//学生成绩查询
+        {path:'/home/studentAuthentication',component:StudentAuthentication},
+        {path:'/home/studentChangePas',component:StudentChangePas}
       ]
       
     },{
@@ -48,8 +66,10 @@ export default new Router({
       name: 'teacher',
       component: TeacherHome,
       children:[
-        {path:'/teacher/enteringgrade',component:EnteringGrade},
-        {path:'/teacher/scoremanagement',component:ScoreManagement}
+        {path:'/teacher/importgrade',component:ImportGrade},//添加成绩
+        {path:'/teacher/scoremanagement',component:ScoreManagement},
+        {path:'/teacher/teacherauthentication',component:TeacherAuthentication},
+        {path:'/teacher/teacherchangepas',component:TeacherChangepas}
       ]
     },
     {
