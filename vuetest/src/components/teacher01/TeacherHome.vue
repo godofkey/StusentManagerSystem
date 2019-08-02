@@ -4,7 +4,7 @@
    <the-header></the-header> 
   </el-header>
   <el-container class="body-wrap">
-    <the-managenav  />
+    <the-teachernav />
     <el-main>
       <div class="main">
         <router-view></router-view>
@@ -16,7 +16,7 @@
 
 <script>
 import TheHeader from '../../view/TheHeader.vue'
-import TheManageNav from '../../view/TheManageNav.vue'
+import TheTeacherNav from '../../view/TheTeacherNav.vue'
 export default {
   data(){
     return{
@@ -25,7 +25,7 @@ export default {
   },
   components:{
     TheHeader,
-   'the-managenav': TheManageNav
+   'the-teachernav': TheTeacherNav
   }
     
     
@@ -77,14 +77,15 @@ export default {
       }
     }
     .el-main {
-      z-index: 1;
+      z-index: 2002;
       background-color: rgba(155, 155, 155, 0.1);
       color: #333;
       text-align: center;
+      padding: 10px;
       .main {
         background-color: #fff;
         padding: 10px;
-        border-radius: 10px;
+        // border-radius: 10px;
         min-height: calc(100vh - 200px)
       }
     }

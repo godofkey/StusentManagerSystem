@@ -4,7 +4,7 @@
    <the-header></the-header> 
   </el-header>
   <el-container class="body-wrap">
-    <the-managenav  />
+    <the-studentnav  />
     <el-main>
       <div class="main">
         <router-view></router-view>
@@ -16,7 +16,7 @@
 
 <script>
 import TheHeader from '../../view/TheHeader.vue'
-import TheManageNav from '../../view/TheManageNav.vue'
+import TheStudentNav from '../../view/TheStudentNav.vue'
 export default {
   data(){
     return{
@@ -25,7 +25,7 @@ export default {
   },
   components:{
     TheHeader,
-   'the-managenav': TheManageNav
+   'the-studentnav': TheStudentNav
   }
     
     

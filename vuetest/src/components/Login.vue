@@ -108,11 +108,11 @@ export default {
           alert("账号或者密码错误")
         }
       },res=>{
-        this.$router.push({ path: "home/studentselect" });
+        this.$router.push({ path: "home" });
       })
        
       } else if (this.radio == 6) {
-        this.$router.push({ path: "teacher/enteringgrade" });
+        this.$router.push({ path: "teacher" });
       } else {
         this.$router.push({ path: "manage" });
       }
