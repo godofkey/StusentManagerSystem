@@ -70,6 +70,12 @@ public class ShiroConfig {
     	StudentRealm studentRealm = new StudentRealm();
         return studentRealm;
     }
+	
+	@Bean(name = "educationalStaffRealm")
+    public EducationalStaffRealm educationalStaffRealm(){
+		EducationalStaffRealm educationalStaffRealm = new EducationalStaffRealm();
+        return educationalStaffRealm;
+    }
 
 	@Bean
     public ModularRealmAuthenticator modularRealmAuthenticator(){

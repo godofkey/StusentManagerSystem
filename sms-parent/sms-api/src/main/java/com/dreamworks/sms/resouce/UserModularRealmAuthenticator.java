@@ -22,6 +22,10 @@ public class UserModularRealmAuthenticator extends ModularRealmAuthenticator {
 
 	@Resource(name = "teacherRealm")
 	private TeacherRealm teacherRealm;
+	
+	@Resource(name = "educationalStaffRealm")
+	private EducationalStaffRealm educationalStaffRealm;
+	
 	 @Override
 	    protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken) {
 	        
@@ -37,8 +41,10 @@ public class UserModularRealmAuthenticator extends ModularRealmAuthenticator {
 	        if(loginType.equals("student")) {
 	        
 	        return doSingleRealmAuthentication(studentRealm, userToken);
-	        } else {
+	        } else if(loginType.equals("teacherRealm")){
 		        return doSingleRealmAuthentication(teacherRealm, userToken);
+	        } else {
+	        	return doSingleRealmAuthentication(educationalStaffRealm, userToken);
 	        }
 	       
 	 }
