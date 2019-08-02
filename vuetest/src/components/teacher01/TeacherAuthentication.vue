@@ -19,7 +19,7 @@
   </div>
 </el-dialog>
 
-<el-card shadow="always" v-for="item in formdata">
+<el-card shadow="always" v-for="(item,key) in formdata" :key="key">
 <el-row :gutter="20"  >
   <el-col :span="6"><div class="grid-content bg-purple"><el-tag type="success">班级</el-tag>{{item.class}}</div></el-col>
   <el-col :span="12"><div class="grid-content bg-purple"><el-tag>科目</el-tag>{{item.subject}}</div></el-col>
@@ -49,6 +49,7 @@
           class:'',
           subject:''
         },
+        key:'',
         formdata:[],
         formLabelWidth: '120px'
       };
