@@ -77,7 +77,6 @@ export default {
       }
     }
     .el-main {
-      z-index: 2002;
       background-color: rgba(155, 155, 155, 0.1);
       color: #333;
       text-align: center;
