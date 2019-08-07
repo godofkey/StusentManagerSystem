@@ -41,33 +41,41 @@
       </el-row>
     </el-card>
   </div>
+
+
+
+    
 </template>
 
 
 
 <script>
-export default {
-  data() {
-    return {
-      dialogFormVisible: false,
-      form: {
-        class: "",
-        subject: ""
-      },
-      formdata: [],
-      key: "",
-      formLabelWidth: "120px"
-    };
-  },
-  methods: {
-    aa() {
-      this.dialogFormVisible = false;
-      this.formdata.push({
-        class: this.form.class,
-        subject: this.form.subject
-      });
+
+  export default {
+    data() {
+      return {
+         dialogFormVisible: false,
+        form: {
+          class:'',
+          subject:''
+        },
+        key:'',
+        formdata:[],
+        formLabelWidth: '120px'
+      };
+    },
+    methods:{
+        
+        aa(){
+            this.dialogFormVisible = false;
+            this.formdata.push({
+                class:this.form.class,
+                subject:this.form.subject
+            })
+        }
+
     }
-  }
+  
 };
 </script>
 

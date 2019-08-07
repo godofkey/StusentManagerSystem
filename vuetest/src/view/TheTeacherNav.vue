@@ -20,13 +20,13 @@
       </template>
       <el-menu-item-group>
         <el-menu-item index="/teacher/importgrade">录入成绩</el-menu-item>
-        <el-menu-item >成绩管理</el-menu-item>
+        <el-menu-item  index="/teacher/scoremanage">成绩管理</el-menu-item>
        <!-- <el-menu-item index="/FormView">成绩横向比较</el-menu-item> -->
-       <el-menu-item >浏览成绩</el-menu-item>
-        <el-menu-item >更新成绩</el-menu-item>
-         <el-menu-item >查询挂科学生</el-menu-item>
-          <el-menu-item >成绩横向比较</el-menu-item>
-           <el-menu-item >成绩纵向比较</el-menu-item>
+       <!-- <el-menu-item >浏览成绩</el-menu-item> -->
+        <!-- <el-menu-item >更新成绩</el-menu-item> -->
+         <el-menu-item  index="/teacher/selectfail">查询挂科学生</el-menu-item>
+          <!-- <el-menu-item index="/teacher/gradelengthways">成绩横向比较</el-menu-item> -->
+           <el-menu-item  index="/teacher/gradehorizontal">学生信息</el-menu-item>
         
 
       </el-menu-item-group>
