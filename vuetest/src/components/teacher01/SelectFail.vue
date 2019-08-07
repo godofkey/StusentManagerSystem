@@ -5,7 +5,7 @@
             
   <el-aside width="600px">
       <el-tabs v-model="activeName"   @tab-click="handleClick" >
-    <el-tab-pane  v-for="(item,key) in tableData" :label="item.title" :name="item.name" ></el-tab-pane>
+    <el-tab-pane  v-for="(item,key) in tableData" :label="item.title" :name="item.name" :key="key"></el-tab-pane>
    
     
   </el-tabs>
@@ -24,29 +24,33 @@ export default {
     
     data(){
         return{
-            activeName: '1',
+            activeName: '0',
             text:'',
             value:[],
             tableData:[
                 {
                     title:'223班第一次月考成绩',
-                    name:'1'
+                    name:'0'
                 },{
                     title:'224班第一次月考生物成绩汇总',
-                    name:'2'
+                    name:'1'
                 },
                 {
                     title:'225班第一次月考生物成绩汇总',
-                    name:'3'
+                    name:'2'
                 }
-            ]
+            ],
+            key:'',
         }
     },
     methods:{
         handleClick(data) {
-        console.log(data._uid);
+           if(data.$options.propsData.name == 0){
+                      this.text = this.tableData[0].title;
+           }
       }
     },
+    
     mounted(){
          var myChart = document.getElementById("main");
 
@@ -58,7 +62,7 @@ export default {
       // 指定图表的配置项和数据
       var option = {
     title : {
-        text: '223班总成绩扇形分布图',
+        text: this.text,
         
         x:'center'
     },

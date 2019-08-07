@@ -2,26 +2,16 @@
     <div class="importgrade">
         <h3 style="margin:20px">上传文件:</h3>
        <el-card >
-    <el-select v-model="value" placeholder="请选择科目">
-    <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
+    <el-input v-model="subjectvalue" placeholder="请选择科目">
+    
+  </el-input>
 
 
-  <el-select v-model="classesvalue" placeholder="请选择班级">
-    <el-option
-      v-for="item in classes"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
+  <el-input v-model="classesvalue" placeholder="请选择班级">
+    
+  </el-input>
 
-  <el-input placeholder="请输入考试场次" style="width:10%"></el-input>
+  <el-input placeholder="请输入考试场次"  v-model="examvalue"></el-input>
 
 <el-form>
   <el-form-item>
@@ -52,25 +42,14 @@
 </template>
 
 <script>
+import XLSX from "xlsx";
 export default {
     data(){
         return{
-          options:[{
-              value:'1',
-              label:'语文'
-          },{
-              value:'2',
-              label:'数学'
-          }],
-          value:'',
-          classes:[{
-              value:'1',
-              label:'223'
-          },{
-              value:'2',
-              label:'224'
-          }],
+         
+          subjectvalue:'',
           classesvalue:'',
+          examvalue:''
           
         }
     },
@@ -138,9 +117,11 @@ export default {
 .el-card{
     margin: 10px;
     
-    .el-select{
+    .el-input{
          margin-right: 20px;
+         width:20%;
     }
+    
 
     .el-button{
         line-height: 1;

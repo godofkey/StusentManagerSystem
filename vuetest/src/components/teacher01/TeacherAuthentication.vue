@@ -19,15 +19,15 @@
   </div>
 </el-dialog>
 
-<el-card shadow="always" v-for="(item,key) in formdata" :key="key">
+<el-card shadow="always" v-for="(item,key) in formdata" :key="key" id="el-card">
 <el-row :gutter="20"  >
   <el-col :span="6"><div class="grid-content bg-purple"><el-tag type="success">班级</el-tag>{{item.class}}</div></el-col>
   <el-col :span="12"><div class="grid-content bg-purple"><el-tag>科目</el-tag>{{item.subject}}</div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple"> 
 
  
- <el-tooltip content="删除" placement="top">
-<el-button type="danger" icon="el-icon-delete" circle></el-button>
+ <el-tooltip content="移除" placement="top" >
+<el-button type="danger" icon="el-icon-delete" circle @click="removeAttribute(key)"></el-button>
 </el-tooltip>
 
 </div>
@@ -62,12 +62,32 @@
                 class:this.form.class,
                 subject:this.form.subject
             })
+        },
+        removeAttribute(data){
+          this.$confirm('确定删除此卡片, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.formdata.splice(data,1);
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+      
+          
         }
     }
   };
 </script>
 
-<style >
+<style lang="scss" >
 .teacherauthentication{
     text-align: left;
 }
