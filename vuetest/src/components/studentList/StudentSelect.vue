@@ -18,8 +18,10 @@
 
 <script>
 export default {
+  
   data() {
     return {
+       
       tableData: [
         {
           date: "语文",
@@ -60,7 +62,19 @@ export default {
       ]
     };
   },
+  mounted() {
+    var typeId = JSON.parse(localStorage.getItem('typeId'));
+    var params = new URLSearchParams();
 
+    params.append('studentId', this.formLabelAlign.typeId);
+    this.Axios.post("http://localhost:8081/ScoreInfoController/getScoreInfoByStudentId", 
+    params
+      ).then((res)=>{
+        
+      },res=>{
+        
+      })
+  },
   methods: {}
 };
 </script>

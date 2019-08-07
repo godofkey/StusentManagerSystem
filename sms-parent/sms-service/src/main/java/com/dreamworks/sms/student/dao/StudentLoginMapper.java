@@ -10,4 +10,5 @@ import com.dreamworks.sms.student.po.StudentPo;
 public interface StudentLoginMapper {
 
 	public StudentInfoPo findStudentByStudentId(StudentQueryDto studentQueryDto);
+	
 }

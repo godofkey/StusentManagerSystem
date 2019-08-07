@@ -18,9 +18,9 @@
           :rules="rules"
           ref="ruleForm"
         >
-          <el-form-item label="用户名" prop="name" style="margin:50px 0; ">
+          <el-form-item label="用户名" prop="name" style="margin:50px 0; " >
             <el-input
-              v-model="formLabelAlign.studentId"
+              v-model="formLabelAlign.typeId"
               style="min-width:340px;"
               ref="name"
               placeholder="请输入学生学号/教师工号/管理员账号"
@@ -69,7 +69,7 @@ export default {
       radio: 3,
       labelPosition: "right",
       formLabelAlign: {
-        studentId: "",
+        typeId: "",
         region: "",
         password: ""
       },
@@ -92,38 +92,89 @@ export default {
 
   methods: {
     ToHome() {
-     if (this.radio == 3) {      
       var params = new URLSearchParams();
-      params.append('sno', this.formLabelAlign.studentId);
-      params.append('spwd',this.formLabelAlign.password);
-      this.Axios.post("http://localhost:8081/student/findStudentBySno", 
+      params.append('studentId', this.formLabelAlign.typeId);
+      params.append('password',this.formLabelAlign.password);
+      
+
+     if (this.radio == 3) {     
+      this.Axios.post("http://localhost:8081/student/findStudentByStudentId", 
        params
       ).then((res)=>{
+        debugger
         if(res.data.code==200){
           this.data.sname==res.data.data.name;
-           this.$router.push({ path: "home/studentselect" });
-          // console.log(this.data.sname)
-          //  console.log(res.data.data.sname)
+          this.$message({
+          message: '登录成功',
+          type: 'success'
+         });
+        localStorage.setItem("typeId",JSON.stringify(this.formLabelAlign.typeId))
+
+          this.$router.push({ path: "home/studentselect" });
+           
         }else{
-          alert("账号或者密码错误")
+          this.$message.error("账号或者密码错误");
         }
       },res=>{
         this.$router.push({ path: "home" });
       })
        
-      } else if (this.radio == 6) {
-        this.$router.push({ path: "teacher" });
-      } else {
-        this.$router.push({ path: "manage" });
-      }
+      } 
 
-      // this.$store.commit('login',this.formLabelAlign.name);
+
+      if (this.radio == 6) {     
+      this.Axios.post("http://localhost:8081/teacher/findTeacherByTeacherId", 
+       params
+      ).then((res)=>{
+        debugger
+        if(res.data.code==200){
+          this.data.sname==res.data.data.name;
+          this.$message({
+          message: '登录成功',
+          type: 'success'
+         });
+         localStorage.setItem("typeId",JSON.stringify(this.formLabelAlign.typeId))
+           this.$router.push({ path: "home/studentselect" });
+        }else{
+          this.$message.error("账号或者密码错误");
+        }
+      },res=>{
+        this.$router.push({ path: "home" });
+      })
+       
+      } 
+
+
+      if (this.radio == 9) {     
+      this.Axios.post("http://localhost:8081/educationalStaff/findStaffByEducationalStaffId", 
+       params
+      ).then((res)=>{
+        debugger
+        if(res.data.code==200){
+          this.data.sname==res.data.data.name;
+         this.$message({
+          message: '登录成功',
+          type: 'success'
+         });
+         localStorage.setItem("typeId",JSON.stringify(this.formLabelAlign.typeId))
+           this.$router.push({ path: "manage" });
+        }else{
+          this.$message.error("账号或者密码错误");
+        }
+      },res=>{
+        this.$router.push({ path: "home" });
+      })
+       
+      } 
+    
 
       localStorage.setItem("name", JSON.stringify(this.data.sname));
-
-      // console.log(data);
     }
   }
+
+      // console.log(data);
+    
+  
 };
 </script>
 

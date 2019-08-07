@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import com.dreamworks.sms.course.dto.CourseInfoDto;
 import com.dreamworks.sms.course.dto.CourseInfoDto.CourseInfoDtoBuilder;
+import com.dreamworks.sms.score.po.ScoreInfoPo;
+import com.dreamworks.sms.student.po.StudentInfoPo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,4 +26,8 @@ public class CourseInfoPo implements Serializable{
     private String courseName;
 
     private Integer courseHour;
+    
+    private StudentInfoPo studentInfoPo;
+    
+    private ScoreInfoPo scoreInfoPo;
 }

@@ -1,14 +1,18 @@
-package com.dreamworks.sms.score.dto;
+package com.dreamworks.sms.score.po;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import com.dreamworks.sms.classInfo.dto.ClassInfoDto;
+import com.dreamworks.sms.classInfo.po.ClassInfoPo;
 import com.dreamworks.sms.course.dto.CourseInfoDto;
+import com.dreamworks.sms.course.po.CourseInfoPo;
 import com.dreamworks.sms.educationalStaff.dto.EducationalStaffInfoDto;
 import com.dreamworks.sms.educationalStaff.dto.EducationalStaffInfoDto.EducationalStaffInfoDtoBuilder;
 import com.dreamworks.sms.student.dto.StudentInfoDto;
+import com.dreamworks.sms.student.po.StudentInfoPo;
 import com.dreamworks.sms.teacher.dto.TeacherInfoDto;
+import com.dreamworks.sms.teacher.po.TeacherInfoPo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +26,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Builder
 @Accessors(chain = true)
-public class ScoreInfoDto implements Serializable{
+public class ScoreInfoPo implements Serializable{
 	
     private Integer scoreId;
 
@@ -35,19 +39,19 @@ public class ScoreInfoDto implements Serializable{
     private Integer scoreNum;
     
     private Integer courseId;
-
+    
     private Integer rowNum;
     
-	private int examinationName;
-    
     private Integer schoolRowNum;
-        
-    private StudentInfoDto studentInfoDto;
     
-    private CourseInfoDto courseInfoDto;
+	private Integer examinationName;
+
+    private StudentInfoPo studentInfoPo;
     
-    private TeacherInfoDto teacherInfoDto;
+    private CourseInfoPo courseInfoPo;
     
-    private ClassInfoDto classInfoDto;
+    private TeacherInfoPo teacherInfoPo;
+    
+    private ClassInfoPo classInfoPo;
     
 }

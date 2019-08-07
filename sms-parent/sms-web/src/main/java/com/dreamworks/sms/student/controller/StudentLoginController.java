@@ -28,7 +28,7 @@ public class StudentLoginController {
 	@Autowired
 	private StudentLoginService studentLoginService;
 	
-	@RequestMapping(value = "/findStudentByStudentId", method = RequestMethod.GET)
+	@RequestMapping(value = "/findStudentByStudentId", method = RequestMethod.POST)
     public JsonResult findStudentByStudentId(StudentQueryDto studentQueryDto) {
         StudentInfoDto studentInfoDto = studentLoginService.findStudentByStudentId(studentQueryDto);
     	Subject subject = SecurityUtils.getSubject();  
@@ -41,7 +41,6 @@ public class StudentLoginController {
 			// TODO: handle exception
 			return new JsonResult(ResultCode.NOT_DATA, "用户名不存在");
 		} catch (IncorrectCredentialsException e) {
-			
 			return new JsonResult(ResultCode.FAIL, "密码错误"); 
 		}
     			

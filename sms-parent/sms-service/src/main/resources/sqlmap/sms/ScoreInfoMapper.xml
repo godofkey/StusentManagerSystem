@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dreamworks.sms.score.dao.ScoreInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.dreamworks.sms.score.po.ScoreInfoPo" >
+    <id column="score_id" property="scoreId" jdbcType="INTEGER" />
+    <result column="student_id" property="studentId" jdbcType="INTEGER" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+    <result column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="course_id" property="courseId" jdbcType="INTEGER" />
+    <result column="score_num" property="scoreNum" jdbcType="INTEGER" />
+    <result column="rownum" property="rowNum" jdbcType="INTEGER" />
+    <result column="examination_name" property="examinationName" jdbcType="INTEGER" />
+
+     <association property="studentInfoPo" javaType="com.dreamworks.sms.student.po.StudentInfoPo">
+            <id column="student_id" property="studentId" />
+		    <result column="studnet_name" property="studnetName" />
+		    <result column="sex" property="sex" />
+		    <result column="birth" property="birth" />
+		    <result column="adress" property="adress" />
+		    <result column="class_id" property="classId" />
+		    <result column="grade" property="grade" />
+		    <result column="password" property="password" />
+       </association>
+       <association property="courseInfoPo" javaType="com.dreamworks.sms.course.po.CourseInfoPo">
+		     <id column="course_id" property="courseId" jdbcType="INTEGER" />
+		     <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+		     <result column="course_hour" property="courseHour" jdbcType="INTEGER" />
+       </association>
+  </resultMap>
+  
+  
+   <resultMap id="BaseResultMap1" type="com.dreamworks.sms.score.po.SumScoreInfoPo" >
+	    <id column="score_id" property="scoreId" jdbcType="INTEGER" />
+	    <result column="student_id" property="studentId" jdbcType="INTEGER" />
+	    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+	    <result column="class_id" property="classId" jdbcType="INTEGER" />
+	    <result column="course_id" property="courseId" jdbcType="INTEGER" />
+	    <result column="score_num" property="scoreNum" jdbcType="INTEGER" />
+	    <result column="rownum" property="rowNum" jdbcType="INTEGER" />
+	    <result column="sum_score" property="sumScore" jdbcType="INTEGER" />
+    </resultMap>
+    
+  <sql id="Base_Column_List1">
+   ${alias}.score_id ,${alias}.student_id ,${alias}.teacher_id ,${alias}.class_id ,
+   ${alias}.score_num, ${alias}.course_id,
+   </sql>
+  <sql id="Base_Column_List2">
+    ${alias}.studnet_name,${alias}.sex,${alias}.birth,
+    ${alias}.adress,${alias}.class_id,${alias}.grade,${alias}.password,
+  </sql>
+  
+  <sql id="Base_Column_List3">
+   ${alias}.course_name ,${alias}.course_hour
+  </sql>
+  
+   <sql id="Base_Column_List4">
+     ${alias}.score_id ,${alias}.student_id ,${alias}.teacher_id ,${alias}.class_id ,
+   ${alias}.score_num, ${alias}.course_id,${alias}.sum_score,${alias}.rowNum,${alias}.examination_name
+  </sql>
+  
+  <select id="getScoreInfoByStudentId" resultMap="BaseResultMap">
+  select 
+  <include refid="Base_Column_List1">
+  <property name="alias" value="t1"/>
+  </include>
+  t1.examination_name,
+  <include refid="Base_Column_List2">
+  <property name="alias" value="t2"/>
+  </include>
+  <include refid="Base_Column_List3">
+  <property name="alias" value="t3"/>
+  </include>
+  from score_info t1, student_info t2,course_info t3
+  <where>
+   t1.course_id = t3.course_id and t1.student_id = #{studentId}
+   and t1.student_id = t2.student_id  
+   <if test="examinationName != 0">
+   and t1.examination_name = #{examinationName}
+   </if>
+  </where>
+  </select>
+  
+ <select id="getScoreInfoRowNum" resultMap="BaseResultMap">
+select a.* from (select t.*,(@rowNum:=@rowNum+1) as rowNum
+from score_info t,
+(select (@rowNum :=0) ) b
+WHERE 
+<if test="courseId != null">
+t.course_id=#{courseId} 
+</if>
+<if test="examinationName">
+and t.examination_name=#{examinationName}
+</if>
+<if test="classId != null">
+and t.class_id=#{classId}
+</if>
+order by t.score_num) a WHERE a.student_id=#{studentId}
+  </select>
+  
+  
+  <select id="getSumScoreInfo" resultMap="BaseResultMap1">
+  SELECT <include refid="Base_Column_List4">
+  <property name="alias" value="a"/>
+  </include>
+FROM (select 
+<include refid="Base_Column_List1">
+  <property name="alias" value="t"/>
+  </include>
+  t.examination_name,
+sum(score_num) as sum_score,(@rowNum:=@rowNum+1) as rowNum  
+from score_info t ,(select (@rowNum :=0) ) b GROUP BY t.student_id ,t.examination_name
+
+HAVING 
+<if test="classId != null">
+t.class_id = #{classId} and 
+</if> 
+
+t.examination_name = #{examinationName}
+
+
+ORDER BY sum(score_num) DESC) as a WHERE 
+
+a.student_id = #{studentId}
+
+
+  </select>
+</mapper>

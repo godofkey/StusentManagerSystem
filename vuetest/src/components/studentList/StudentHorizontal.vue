@@ -3,7 +3,7 @@
     
 
     <ul class="studenthorizontal_ul">
-      <li v-for="(item,key) in formData" @click="dialogTableVisibleChange(key)" class="aa">
+      <li v-for="(item,key) in formData" @click="dialogTableVisibleChange(key)" class="aa" :key="key">
         <div class="inner" >
          {{item}}
         </div>
@@ -22,44 +22,21 @@
 <script>
 var echarts = require("echarts");
 export default {
+ 
   data() {
     return {
-      formData: ["语文", "数学", "外语", "物理", "化学", "地理","总分"],
+
+
+      formData: [],
 
       
       dialogFormVisible: false,
       boxShow: true,
-      text: ["语文", "数学", "外语", "物理", "化学", "地理","总分"],
+      text: [],
       dataexamssion: [
-        "第一次月考",
-        "第二次月考",
-        "第三次月考",
-        "期中考试",
-        "第四次月考"
       ],
       key: "",
-      datagrade: [
-        {
-          data: [12, 36, 56, 82, 99]
-        },
-        {
-          data: [22, 36, 26, 22, 29]
-        },
-        {
-          data: [42, 56, 86, 42, 39]
-        },
-        {
-          data: [12, 36, 56, 82, 99]
-        },
-        {
-          data: [12, 36, 56, 82, 99]
-        },
-        {
-          data: [12, 36, 56, 82, 99]
-        }, {
-          data: [42, 56, 86, 42, 39]
-        },
-      ],
+      datagrade: [],
       form: {
         name: "",
         region: "",
@@ -70,10 +47,109 @@ export default {
         resource: "",
         desc: ""
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      scoreInfoList:[]
     };
   },
+   mounted() {
+     var params1 = new URLSearchParams();
+      params1.append('studentId', JSON.parse(localStorage.getItem('typeId')));
+      params1.append('examinationName','1');
+      
+    var params2 = new URLSearchParams();
+      params2.append('studentId', JSON.parse(localStorage.getItem('typeId')));
+    
+   this.Axios.post("http://localhost:8081/ScoreInfoController/getScoreInfoByStudentId", 
+       params1
+      ).then((res)=>{
+        debugger
+       var dataList = res.data.data;
+       this.checkData(dataList);
+      })
+
+
+      this.Axios.post("http://localhost:8081/ScoreInfoController/getListScoreInfo", 
+       params2
+      ).then((res)=>{
+       var scoreInfoList = res.data.data;
+       this.transformationInfo(scoreInfoList);
+      })
+  },
   methods: {
+    checkData(data){
+      var dataList= [];
+      for(var i=0; i<data.length;i++){
+       dataList.push(data[i].courseInfoDto.courseName);
+       this.formData = dataList;
+       this.text = dataList;
+       }
+    },
+    transformationInfo(scoreInfoList){
+      var examinationNameKindList=[];
+      var examinationNameList = [];
+      for(var i=0;i<scoreInfoList.length;i++){
+        if(examinationNameList.length===0){
+          examinationNameList.push(scoreInfoList[i])
+        }
+         for(var j=0; j<examinationNameList.length;j++){
+           
+           if(scoreInfoList[i].examinationName === examinationNameList[j].examinationName){
+             break
+           }
+           if(j === examinationNameList.length-1){
+              examinationNameList.push(scoreInfoList[i])
+           }
+         }
+      }
+      for(var aa=0; aa<examinationNameList.length;aa++){
+         var kk=[];   
+         examinationNameKindList.push(kk);
+      }
+        for(var k=0 ;k<examinationNameList.length;k++){
+          for(var z=0;z<scoreInfoList.length;z++){
+          if(examinationNameList[k].examinationName === scoreInfoList[z].examinationName){
+              examinationNameKindList[k].push(scoreInfoList[z]);
+           }
+          }
+        }
+        
+        var exam = [];
+        for(var i=0;i<examinationNameList.length;i++){
+          
+          exam.push(examinationNameList[i].examinationName);
+        }
+        
+        this.transDataexamssion(exam);
+        this.selectData(examinationNameKindList);
+    },
+    transDataexamssion(exam){
+         for(var i=0;i<exam.length;i++){
+           var k=i+1;
+           
+              this.dataexamssion.push("第"+k+"月考")
+           
+         }
+    },
+     selectData(examinationNameKindList ){
+       var list = [];
+   
+       for(var i=0;i<examinationNameKindList[0].length;i++){
+          var aa = {}; 
+          list.push(aa);
+          list[i].data=[];
+       }
+         for(var i=0;i<examinationNameKindList.length;i++){
+             
+          for(var j=0;j<examinationNameKindList[i].length;j++){
+            
+            debugger
+            list[j].data.push(examinationNameKindList[i][j].scoreNum)
+          }
+        
+       }
+        this.datagrade=list;
+      },
+     
     dialogTableVisibleChange(key) {
       this.dialogFormVisible = true;
 
@@ -94,13 +170,7 @@ export default {
           data: ["分数"]
         },
         xAxis: {
-          data: [
-            "第一次月考",
-            "第二次月考",
-            "第三次月考",
-            "期中考试",
-            "第四次月考"
-          ]
+          data:this.dataexamssion
         },
         yAxis: {},
         series: [
@@ -129,8 +199,7 @@ export default {
     //   t.dialogTableVisibleChange(key);
     // }, 0);
     //   }
-  },
-  mounted() {}
+  }
 };
 </script>
 

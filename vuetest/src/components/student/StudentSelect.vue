@@ -1,63 +1,50 @@
 <template>
   <div id="studentselect" class="studentselect">
-    <el-table
-      :data="tableData"
-      stripe
-      show-summary
-   
-      sum-text="总分"
-      style="width: 100%"
-    >
-      <el-table-column prop="date" label="科目" width="320"></el-table-column>
-      <el-table-column prop="name" label="成绩" width="320"></el-table-column>
-      <el-table-column prop="address" label="班级排名"></el-table-column>
-      <el-table-column prop="colunm" label="全校排名"></el-table-column>
+ <el-table :data="scoreInfo" stripe style="width: 100%">
+
+      <el-table-column label="科目" >
+        <template slot-scope="scope">{{ scope.row.courseInfoDto.courseName }}</template>
+      </el-table-column>
+
+       <el-table-column label="成绩">
+        <template slot-scope="scope">{{ scope.row.scoreNum }}</template>
+      </el-table-column>
+
+      <el-table-column label="班级排名">
+        <template slot-scope="scope">{{ scope.row.rowNum }}</template>
+      </el-table-column>
+
+       <el-table-column label="学校排名">
+        <template slot-scope="scope">{{ scope.row.schoolRowNum }}</template>
+      </el-table-column>
+     
+     <el-table-column label="总分">
+        <template slot-scope="scope">{{ scope.row.schoolRowNum }}</template>
+      </el-table-column>
     </el-table>
-  </div>
+
+
+    </div>
 </template>
 
 <script>
 export default {
+  mounted() {
+    debugger
+  var params = new URLSearchParams();
+      params.append('studentId', JSON.parse(localStorage.getItem('typeId')));
+      params.append('examinationName', '1');
+      
+   this.Axios.post("http://localhost:8081/ScoreInfoController/getScoreInfoByStudentId", 
+       params
+      ).then((res)=>{
+       this.scoreInfo=res.data.data;
+      })
+  },
   data() {
     return {
-      tableData: [
-        {
-          date: "语文",
-          name: 88,
-          address: "3",
-          colunm: "3"
-        },
-        {
-          date: "数学",
-          name: 65,
-          address: "35",
-          colunm: "3"
-        },
-        {
-          date: "外语",
-          name: 72,
-          address: "22",
-          colunm: "3"
-        },
-        {
-          date: "化学",
-          name: 92,
-          address: "1",
-          colunm: "3"
-        },
-        {
-          date: "物理",
-          name: 99,
-          address: "1",
-          colunm: "3"
-        },
-        {
-          date: "生物",
-          name: 78,
-          address: "16",
-          colunm: "3"
-        }
-      ]
+    scoreInfo:[]
+       
     };
   },
 

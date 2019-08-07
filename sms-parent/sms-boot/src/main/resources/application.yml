@@ -16,9 +16,9 @@ mybatis:
 spring:
     #数据源配置
   datasource:
-    url: jdbc:mysql://localhost:3306/studentmanagersystem
+    url: jdbc:mysql://localhost:3306/student_manager_system
     username: root
-    password: Qq31415926
+    password: a123
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     
