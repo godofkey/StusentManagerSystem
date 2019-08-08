@@ -1,7 +1,7 @@
 <template>
     <div class="importgrade">
         <h3 style="margin:20px">上传文件:</h3>
-       <el-card >
+       <el-card  >
     <el-input v-model="subjectvalue" placeholder="请选择科目">
     
   </el-input>
@@ -13,7 +13,7 @@
 
   <el-input placeholder="请输入考试场次"  v-model="examvalue"></el-input>
 
-<el-form>
+<el-form >
   <el-form-item>
             <el-upload
               ref="upload"
@@ -33,10 +33,10 @@
               </el-button>
             </el-upload>
           </el-form-item>
-         
+        
 </el-form>
-<el-button type="primary" :loading="false" class="primary">提交</el-button>
 
+ <el-button type="primary" :loading="false" class="primary">提交</el-button>
        </el-card>
     </div>
 </template>
@@ -101,26 +101,27 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 .importgrade{
     text-align: left;
+    
     
     span{
        font-size: 25px;
      
     }
 }
-.el-card__body{
-    display:flex;
-}
-.el-card{
-    margin: 10px;
-    
+
+
+
+
     .el-input{
          margin-right: 20px;
          width:20%;
     }
+
+   
     
 
     .el-button{
@@ -130,15 +131,15 @@ export default {
            font-size: 10px;
         }
     }
-}
+
 .primary{
     height: 40px;
     /* float: right; */
     /* display: inline-block; */
     display: block;
-    position: absolute;
+    // position: absolute;
     /* right: -66%; */
-    right: 6%;
+   
 }
 </style>
 

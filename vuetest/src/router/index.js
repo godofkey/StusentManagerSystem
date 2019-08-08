@@ -79,7 +79,9 @@ export default new Router({
         {path:'/teacher/teacherchangepas',component:TeacherChangepas},
         {path:'/teacher/selectfail',component:SelectFail},
         {path:'/teacher/gradehorizontal',component:GradeHorizontal},
-        {path:'/teacher/gradelengthways',component:GradeLengthways}
+        {path:'/teacher/gradelengthways',component:GradeLengthways},
+        {path:'/teacher/studenthorizontal',component:StudentHorizontal},//学生成绩横向比较
+
       ]
     },
     {
