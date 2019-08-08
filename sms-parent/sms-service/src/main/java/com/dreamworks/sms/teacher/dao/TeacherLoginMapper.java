@@ -12,4 +12,6 @@ import com.dreamworks.sms.teacher.po.TeacherPo;
 public interface TeacherLoginMapper {
 
 	public TeacherInfoPo findTeacherByTeacherId(TeacherQueryDto teacherQueryDto);
+	
+	public TeacherInfoPo getTeacherInfo(TeacherQueryDto teacherQueryDto);
 }

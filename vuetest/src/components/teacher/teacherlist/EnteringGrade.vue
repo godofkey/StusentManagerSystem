@@ -159,8 +159,6 @@ export default {
             examsession: this.formInline.examsession,
             grade: this.sheetName[0].sheet[i].成绩
           });
-
-          console.log("111");
         }
         this.sheetName = "";
       }

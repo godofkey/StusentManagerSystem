@@ -129,12 +129,13 @@ export default {
         debugger
         if(res.data.code==200){
           this.data.sname==res.data.data.name;
+          
           this.$message({
           message: '登录成功',
           type: 'success'
          });
          localStorage.setItem("typeId",JSON.stringify(this.formLabelAlign.typeId))
-           this.$router.push({ path: "home/studentselect" });
+          
         }else{
           this.$message.error("账号或者密码错误");
         }

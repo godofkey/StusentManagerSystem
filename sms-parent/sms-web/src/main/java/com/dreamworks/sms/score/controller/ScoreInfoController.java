@@ -1,9 +1,12 @@
 package com.dreamworks.sms.score.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dreamworks.sms.resouce.JsonResult;
 import com.dreamworks.sms.resouce.ResultCode;
 import com.dreamworks.sms.score.dto.ScoreInfoDto;
+import com.dreamworks.sms.score.dto.ScoreInfoListDto;
 import com.dreamworks.sms.score.dto.ScoreInfoQueryDto;
 import com.dreamworks.sms.score.service.ScorInfoService;
 
@@ -36,4 +40,27 @@ public class ScoreInfoController {
 		return new JsonResult(ResultCode.SUCCESS, "成功", list);
 	}
 
+	@RequestMapping(value = "/InsertListScoreInfo",method = RequestMethod.POST)
+	public JsonResult InsertListScoreInfo(@RequestBody List<ScoreInfoDto> list) {
+
+		//System.out.println(list+"===================");
+		//		
+//		try {
+//			String json = URLDecoder.decode(list,"utf-8");
+//			JSONArray.parseArray(json);
+//		} catch (UnsupportedEncodingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
+		
+//		List<ScoreInfoDto> list
+//		//System.out.println(list.getList() + "======================");
+//		//List<ScoreInfoDto> li = list.getList();
+//		System.out.println(list+"==============");
+		int i = scorInfoService.InsertListScoreInfo(list);
+		
+		return new JsonResult(ResultCode.SUCCESS, "成功",i);
+	}
 }

@@ -16,6 +16,9 @@ import com.dreamworks.sms.score.po.ScoreInfoPo;
 import com.dreamworks.sms.score.po.SumScoreInfoPo;
 import com.dreamworks.sms.score.service.ScorInfoService;
 import com.dreamworks.sms.student.dto.StudentInfoDto;
+import com.dreamworks.sms.teacher.dao.TeacherLoginMapper;
+import com.dreamworks.sms.teacher.dto.TeacherQueryDto;
+import com.dreamworks.sms.teacher.po.TeacherInfoPo;
 
 @Service
 public class ScoreInfoServiceImpl implements ScorInfoService{
@@ -23,8 +26,8 @@ public class ScoreInfoServiceImpl implements ScorInfoService{
 	@Autowired
 	private ScoreInfoMapper scoreInfoMapper;
 	
-	
-
+	@Autowired
+	private TeacherLoginMapper teacherLoginMapper;
 	
 	@Override
 	public List<ScoreInfoDto> getScoreInfoByStudentId(ScoreInfoQueryDto scoreInfoQueryDto) {
@@ -90,6 +93,27 @@ public class ScoreInfoServiceImpl implements ScorInfoService{
 		   l.add(sDto);
 		}				
 		return l;
+	}
+
+
+
+
+	@Override
+	public int InsertListScoreInfo(List<ScoreInfoDto> list) {
+		// TODO Auto-generated method stub
+		List<ScoreInfoDto> l = new ArrayList<ScoreInfoDto>();
+		TeacherQueryDto teacherQueryDto = new TeacherQueryDto();
+		teacherQueryDto.setClassId(list.get(0).getClassId());
+		teacherQueryDto.setCourseId(list.get(0).getCourseId());
+		System.out.println("======================="+teacherQueryDto);
+		TeacherInfoPo teacherInfoPo = teacherLoginMapper.getTeacherInfo(teacherQueryDto);
+		System.out.println("=======================");
+		for(ScoreInfoDto scoreInfoDto : list) {
+			scoreInfoDto.setTeacherId(teacherInfoPo.getTeacherId());
+			l.add(scoreInfoDto);
+		}	
+		int i = scoreInfoMapper.InsertListScoreInfo(l);
+		return i;
 	}
 
 }

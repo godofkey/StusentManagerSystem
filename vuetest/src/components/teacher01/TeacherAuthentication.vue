@@ -43,7 +43,6 @@
   </div>
 
 
-
     
 </template>
 
@@ -72,6 +71,26 @@
                 class:this.form.class,
                 subject:this.form.subject
             })
+        },
+        removeAttribute(data){
+          this.$confirm('确定删除此卡片, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.formdata.splice(data,1);
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+      
+          
         }
 
     }

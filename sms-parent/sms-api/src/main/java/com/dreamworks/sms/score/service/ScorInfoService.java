@@ -10,4 +10,6 @@ public interface ScorInfoService {
 	public List<ScoreInfoDto> getScoreInfoByStudentId(ScoreInfoQueryDto scoreInfoQueryDto);
 
 	public List<ScoreInfoDto> getListScoreInfo(ScoreInfoQueryDto scoreInfoQueryDto);
+	
+	public int InsertListScoreInfo(List<ScoreInfoDto> list);
 }

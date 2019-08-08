@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.dreamworks.sms.course.po.CourseInfoPo;
+import com.dreamworks.sms.score.dto.ScoreInfoDto;
 import com.dreamworks.sms.score.dto.ScoreInfoQueryDto;
 import com.dreamworks.sms.score.dto.ScoreInfoReDto;
 import com.dreamworks.sms.score.po.ListScoreInfoPo;
@@ -22,4 +23,6 @@ public interface ScoreInfoMapper {
     public SumScoreInfoPo getSumScoreInfo(ScoreInfoReDto scoreInfoReDto);
     
     public List<ListScoreInfoPo> getListScoreInfo(ScoreInfoReDto scoreInfoReDto);
+    
+    public int InsertListScoreInfo(List<ScoreInfoDto> list);
 }

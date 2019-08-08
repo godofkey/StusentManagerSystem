@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-tabs v-model="activeName">
-      <el-tab-pane v-for="item in tabledata" :label="item.title" :name="item.name" :key="item.name">
+    <el-tabs v-model="activeName" @tab-click="printkey">
+      <el-tab-pane v-for="item in tabledata" :label="item.title" :name="item.name" :key="item.name" >
         <!-- <el-table class="tb-edit" highlight-current-row :data="tableData" style="width: 100%;line-height:100px;" > -->
         <el-table :data="tableData" height="calc(100vh - 100px)" border style="width: 99%">
           <template v-for="(col,index) in cols">
-            <el-table-column :prop="col.prop" :label="col.label" :key="index"></el-table-column>
+            <el-table-column :prop="col.prop" :label="col.label" :key="index" ></el-table-column>
           </template>
           <el-table-column fixed="right" label="操作" width="100">
             <template slot-scope="scope">
@@ -19,7 +19,9 @@
   </div>
 </template>
 <script>
+import XLSX from "xlsx";
 export default {
+
   data() {
     return {
       tabledata: [
@@ -115,6 +117,9 @@ export default {
   methods: {
     handleClick(row) {
       console.log(row);
+    },
+    printkey(data){
+      console.log(data)
     }
   }
 };

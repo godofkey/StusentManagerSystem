@@ -13,7 +13,7 @@ import StudentLengthways from '@/components/studentList/StudentLengthways.vue'
 
 // import TeacherHome from '@/components/teacher/TeacherHome.vue'
 
-// import EnteringGrade from '@/components/teacher/teacherlist/EnteringGrade.vue'
+import EnteringGrade from '@/components/teacher/teacherlist/EnteringGrade.vue'
 
 // import ScoreManagement from '@/components/teacher/teacherlist/ScoreManagement.vue'
 
@@ -74,7 +74,7 @@ export default new Router({
       component: TeacherHome,
       children:[
         {path:'/teacher/importgrade',component:ImportGrade},//添加成绩
-        {path:'/teacher/scoremanage',component:SourceManage},
+        {path:'/teacher/scoremanage',component:EnteringGrade},
         {path:'/teacher/teacherauthentication',component:TeacherAuthentication},
         {path:'/teacher/teacherchangepas',component:TeacherChangepas},
         {path:'/teacher/selectfail',component:SelectFail},

@@ -26,4 +26,8 @@ public class TeacherQueryDto implements Serializable {
     private String password;
 
     private String loginType;
+    
+    private Integer classId;
+    
+    private Integer courseId;
 }

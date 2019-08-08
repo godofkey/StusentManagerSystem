@@ -2,26 +2,51 @@
     <div class="importgrade">
         <h3 style="margin:20px">上传文件:</h3>
        <el-card >
-    <el-select v-model="value" placeholder="请选择科目">
-    <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
+    <!-- <el-input v-model="subjectvalue" placeholder="请选择科目">
+    
+  </el-input> -->
+   <el-select
+          v-model="subjectvalue"
+          placeholder="请选择科目"
+          clearable
+          >
+          <el-option
+            v-for="item in courseInfoList"
+            :key="item.courseId"
+            :label="item.courseName"
+            :value="item.courseId"/>
+        </el-select>
 
+  <!-- <el-input v-model="classesvalue" placeholder="请选择班级">
+  </el-input> -->
+   <el-select
+          v-model="classesvalue"
+          placeholder="请选择班级"
+          clearable
+          
+          >
+          <el-option
+            v-for="item in classInfoList"
+            :key="item.classId"
+            :label="item.className"
+            :value="item.classId"/>
+        </el-select>
+         <el-select
+          v-model="examvalue"
+          placeholder="请选择考试场次"
+          clearable
+          
+          >
+          <el-option
+            v-for="item in examList"
+            :key="item.value"
+            :label="item.name"
+            :value="item.value"/>
+        </el-select>
+  
 
-  <el-select v-model="classesvalue" placeholder="请选择班级">
-    <el-option
-      v-for="item in classes"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
-
-  <el-input placeholder="请输入考试场次" style="width:10%"></el-input>
+  
+  <el-button type="primary" size="medium" @click="onSubmit">提交</el-button>
 
 <el-form>
   <el-form-item>
@@ -45,37 +70,84 @@
           </el-form-item>
          
 </el-form>
-<el-button type="primary" :loading="false" class="primary">提交</el-button>
 
        </el-card>
     </div>
 </template>
 
 <script>
+import XLSX from "xlsx";
+import qs from	'qs';
 export default {
+   mounted() {
+   debugger
+   this.Axios.post("http://localhost:8081/CourseInfoController/getCourseInfo"
+      ).then((res)=>{
+       this.courseInfoList=res.data.data;
+      })
+
+        this.Axios.post("http://localhost:8081/ClassInfoController/getClassInfo"
+      ).then((res)=>{
+       this.classInfoList=res.data.data;
+      })
+  },
     data(){
         return{
-          options:[{
-              value:'1',
-              label:'语文'
-          },{
-              value:'2',
-              label:'数学'
-          }],
-          value:'',
-          classes:[{
-              value:'1',
-              label:'223'
-          },{
-              value:'2',
-              label:'224'
-          }],
+          courseInfoList:[],
+          classInfoList:[],
+          dataList:[],
+          examList:[
+          {name : "第一次月考",value :"1"},
+          {name : "第二次月考",value :"2"},
+          {name : "期中考试",value :"3"},
+          {name : "第三次月考",value :"4"}
+          ],
+          subjectvalue:'',
           classesvalue:'',
-          
+          examvalue:''
         }
     },
     methods:{
-         importExcel(file) {
+      onSubmit(){
+
+      this.axios({
+          method:"post",
+          url:"http://localhost:8081/ScoreInfoController/InsertListScoreInfo",
+          data: JSON.stringify(this.dataList),
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          }
+        }).then((res)=>{
+        if(res.data.code==200){
+          this.$message({
+          message: '提交成功',
+          type: 'success'
+         });
+          } else {
+          this.$message({
+          message: '提交失败',
+          type: 'success'
+         });
+          }
+          })
+      },
+      checkData(data){
+        var dataList = [];
+        for(var i=0;i<data.length;i++){
+        var d = {name:"",scoreNum:"",studentId:"",courseId:"",classId:"",examinationName:""}
+        d.name=data[i].姓名;
+        d.scoreNum=data[i].成绩;
+        d.studentId=data[i].学号;
+        d.courseId=this.subjectvalue;
+        d.classId=this.classesvalue;
+        d.examinationName=this.examvalue
+        dataList.push(d);
+        }
+        debugger;
+       this.dataList=dataList;
+      },
+      importExcel(file) {
       // let file = file.files[0] // 使用传统的input方法需要加上这一步
       const types = file.name.split(".")[1];
       const fileType = ["xlsx", "xlc", "xlm", "xls", "xlt", "xlw", "csv"].some(
@@ -87,12 +159,25 @@ export default {
       }
       this.file2Xce(file).then(tabJson => {
         if (tabJson && tabJson.length > 0) {
-          this.sheetName = tabJson;
+          debugger;
+          console.log(this.dataList+"==================")
+         this.checkData(tabJson[0].sheet)
+          this.sheetName = tabJson;     
+      var params = new URLSearchParams();
+      var bb = JSON.stringify(this.dataList);
+      var aa = {}
+      aa.list=bb;
+      params.append('list', bb);
+      
+      console.log(params);
+      
+
+    
+         
           alert("您已成功添加文件");
-          
         } else {
           alert("格式不正确");
-          console.log(tabJson.length);
+          console.log(tabJson);
         }
       });
     },
@@ -122,7 +207,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 .importgrade{
     text-align: left;
@@ -138,9 +223,11 @@ export default {
 .el-card{
     margin: 10px;
     
-    .el-select{
+    .el-input{
          margin-right: 20px;
+         width:20%;
     }
+    
 
     .el-button{
         line-height: 1;

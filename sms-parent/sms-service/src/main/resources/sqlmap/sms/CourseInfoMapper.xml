@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dreamworks.sms.course.dao.CourseInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.dreamworks.sms.course.po.CourseInfoPo" >
+    <id column="course_id" property="courseId" jdbcType="INTEGER" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="course_hour" property="courseHour" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List">course_id,course_name,course_hour</sql>
+  <select id="getCourseInfo" resultMap="BaseResultMap">
+  select <include refid="Base_Column_List"></include>
+ from course_info
+  </select>
+</mapper>

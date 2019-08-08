@@ -47,4 +47,14 @@
    t1.class_id = t3.class_id and t1.course_id = t2.course_id
    </where>
    </select>
+   
+   <select id="getTeacherInfo" resultMap="BaseResultMap">
+   select 
+   teacher_id ,teahcer_name ,birth ,adress ,
+   class_id ,is_headmaster ,course_id ,password
+    from teacher_info 
+    <where>
+    class_id = #{classId} and course_id=#{courseId}
+    </where> 
+   </select>
 </mapper>

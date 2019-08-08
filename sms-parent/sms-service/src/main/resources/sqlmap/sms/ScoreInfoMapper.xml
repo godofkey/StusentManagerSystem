@@ -114,14 +114,17 @@ HAVING
 <if test="classId != null">
 t.class_id = #{classId} and 
 </if> 
-
 t.examination_name = #{examinationName}
-
-
 ORDER BY sum(score_num) DESC) as a WHERE 
-
 a.student_id = #{studentId}
-
-
   </select>
+  
+  
+  <insert id="InsertListScoreInfo" parameterType="java.util.ArrayList">
+  insert into score_info values
+  <foreach collection="list" item="item" index="index" separator=",">
+  (#{item.examinationName},#{item.scoreId},#{item.studentId},#{item.teacherId},
+  #{item.classId},#{item.scoreNum},#{item.courseId})
+  </foreach>
+  </insert>
 </mapper>
