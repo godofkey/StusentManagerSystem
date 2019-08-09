@@ -31,7 +31,7 @@ public class TeacherLoginController {
 
     @Autowired
     private TeacherLoginService teacherLoginService;
-    @RequestMapping(value = "/findTeacherByTeacherId" , method = RequestMethod.POST)
+    @RequestMapping(value = "/findTeacherByTeacherId" , method = RequestMethod.GET)
     public JsonResult findTeacherByTno(TeacherQueryDto teacherQueryDto){        
         TeacherInfoDto teacherInfoDto=teacherLoginService.findTeacherByTeacherId((teacherQueryDto));
      	Subject subject = SecurityUtils.getSubject();  

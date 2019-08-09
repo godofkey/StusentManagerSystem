@@ -1,7 +1,9 @@
 package com.dreamworks.sms.score.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +116,57 @@ public class ScoreInfoServiceImpl implements ScorInfoService{
 		}	
 		int i = scoreInfoMapper.InsertListScoreInfo(l);
 		return i;
+	}
+
+
+
+
+	@Override
+	public Map<Integer, List<ScoreInfoDto>> getClassScoreInfo(ScoreInfoQueryDto scoreInfoQueryDto) {
+		// TODO Auto-generated method stub
+		List<ScoreInfoPo> list = scoreInfoMapper.getClassScoreInfo(scoreInfoQueryDto);
+		List<ScoreInfoDto> l = new ArrayList<ScoreInfoDto>();
+		ModelMapper modelMapper = new ModelMapper();
+		for(ScoreInfoPo scoreInfoPo : list) {   
+		   StudentInfoDto studentInfoDto = modelMapper.map(scoreInfoPo.getStudentInfoPo(),StudentInfoDto.class);
+		   CourseInfoDto courseInfoDto = modelMapper.map(scoreInfoPo.getCourseInfoPo(),CourseInfoDto.class);
+		   ScoreInfoDto sDto = modelMapper.map(scoreInfoPo,ScoreInfoDto.class);
+		   sDto.setStudentInfoDto(studentInfoDto);
+		   sDto.setCourseInfoDto(courseInfoDto);
+		   l.add(sDto);
+		}
+		
+		Map<Integer, List<ScoreInfoDto>> map = new HashMap<Integer, List<ScoreInfoDto>>();
+		for(ScoreInfoDto src : l) {
+			if(map.containsKey(src.getStudentId())) {
+				map.get(src.getStudentId()).add(src);
+			} else {
+				List<ScoreInfoDto> newList = new ArrayList<ScoreInfoDto>();
+				newList.add(src);
+				map.put(src.getStudentId(),newList);
+			}
+		}
+		
+		return map;
+	}
+	
+	
+	@Override
+	public List<ScoreInfoDto> getClassOneScoreInfo(ScoreInfoQueryDto scoreInfoQueryDto) {
+		// TODO Auto-generated method stub
+		List<ScoreInfoPo> list = scoreInfoMapper.getClassScoreInfo(scoreInfoQueryDto);
+		List<ScoreInfoDto> l = new ArrayList<ScoreInfoDto>();
+		ModelMapper modelMapper = new ModelMapper();
+		for(ScoreInfoPo scoreInfoPo : list) {   
+		   StudentInfoDto studentInfoDto = modelMapper.map(scoreInfoPo.getStudentInfoPo(),StudentInfoDto.class);
+		   CourseInfoDto courseInfoDto = modelMapper.map(scoreInfoPo.getCourseInfoPo(),CourseInfoDto.class);
+		   ScoreInfoDto sDto = modelMapper.map(scoreInfoPo,ScoreInfoDto.class);
+		   sDto.setStudentInfoDto(studentInfoDto);
+		   sDto.setCourseInfoDto(courseInfoDto);
+		   l.add(sDto);
+		}
+	
+		return l;
 	}
 
 }

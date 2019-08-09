@@ -3,6 +3,7 @@ package com.dreamworks.sms.score.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +27,7 @@ public class ScoreInfoController {
 	@Autowired
 	private ScorInfoService scorInfoService;
 	
-	@RequestMapping(value = "/getScoreInfoByStudentId",method = RequestMethod.POST)
+	@RequestMapping(value = "/getScoreInfoByStudentId",method = RequestMethod.GET)
 	public JsonResult getScoreInfoByStudentId(ScoreInfoQueryDto scoreInfoQueryDto) {
 		List<ScoreInfoDto> list = scorInfoService.getScoreInfoByStudentId(scoreInfoQueryDto);
 		
@@ -42,25 +43,20 @@ public class ScoreInfoController {
 
 	@RequestMapping(value = "/InsertListScoreInfo",method = RequestMethod.POST)
 	public JsonResult InsertListScoreInfo(@RequestBody List<ScoreInfoDto> list) {
-
-		//System.out.println(list+"===================");
-		//		
-//		try {
-//			String json = URLDecoder.decode(list,"utf-8");
-//			JSONArray.parseArray(json);
-//		} catch (UnsupportedEncodingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		
-		
-//		List<ScoreInfoDto> list
-//		//System.out.println(list.getList() + "======================");
-//		//List<ScoreInfoDto> li = list.getList();
-//		System.out.println(list+"==============");
 		int i = scorInfoService.InsertListScoreInfo(list);
 		
 		return new JsonResult(ResultCode.SUCCESS, "成功",i);
+	}
+	
+	@RequestMapping(value = "/getClassScoreInfo",method = RequestMethod.GET)
+	public JsonResult getClassScoreInfo(ScoreInfoQueryDto scoreInfoQueryDto) {
+		Map<Integer, List<ScoreInfoDto>> list = scorInfoService.getClassScoreInfo(scoreInfoQueryDto);
+		return new JsonResult(ResultCode.SUCCESS, "成功", list);
+	}
+	
+	@RequestMapping(value = "/getClassOneScoreInfo",method = RequestMethod.GET)
+	public JsonResult getClassOneScoreInfo(ScoreInfoQueryDto scoreInfoQueryDto) {
+		List<ScoreInfoDto> list = scorInfoService.getClassOneScoreInfo(scoreInfoQueryDto);
+		return new JsonResult(ResultCode.SUCCESS, "成功", list);
 	}
 }

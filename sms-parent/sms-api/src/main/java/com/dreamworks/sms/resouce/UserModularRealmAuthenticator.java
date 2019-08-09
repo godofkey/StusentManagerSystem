@@ -41,7 +41,7 @@ public class UserModularRealmAuthenticator extends ModularRealmAuthenticator {
 	        if(loginType.equals("student")) {
 	        
 	        return doSingleRealmAuthentication(studentRealm, userToken);
-	        } else if(loginType.equals("teacherRealm")){
+	        } else if(loginType.equals("teacher")){
 		        return doSingleRealmAuthentication(teacherRealm, userToken);
 	        } else {
 	        	return doSingleRealmAuthentication(educationalStaffRealm, userToken);

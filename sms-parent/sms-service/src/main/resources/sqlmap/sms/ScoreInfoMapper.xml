@@ -127,4 +127,35 @@ a.student_id = #{studentId}
   #{item.classId},#{item.scoreNum},#{item.courseId})
   </foreach>
   </insert>
+  
+  
+  <select id="getClassScoreInfo" resultMap="BaseResultMap">
+  select 
+  <include refid="Base_Column_List1">
+  <property name="alias" value="t1"/>
+  </include>
+  t1.examination_name,
+  <include refid="Base_Column_List2">
+  <property name="alias" value="t2"/>
+  </include>
+  <include refid="Base_Column_List3">
+  <property name="alias" value="t3"/>
+  </include>
+  from score_info t1, student_info t2,course_info t3
+  <where>
+   t1.course_id = t3.course_id
+   and t1.student_id = t2.student_id  
+   <if test="examinationName != 0">
+   and t1.examination_name = #{examinationName}
+   </if>
+   <if test="classId != null">
+   and t1.class_id=#{classId}
+   </if>
+   <if test="courseId != null">
+   and t1.course_id=#{courseId}
+   </if>
+  </where>
+  </select>
+ 
+  
 </mapper>

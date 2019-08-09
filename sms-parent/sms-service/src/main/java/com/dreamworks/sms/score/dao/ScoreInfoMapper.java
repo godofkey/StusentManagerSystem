@@ -25,4 +25,7 @@ public interface ScoreInfoMapper {
     public List<ListScoreInfoPo> getListScoreInfo(ScoreInfoReDto scoreInfoReDto);
     
     public int InsertListScoreInfo(List<ScoreInfoDto> list);
+    
+    public List<ScoreInfoPo> getClassScoreInfo(ScoreInfoQueryDto scoreInfoQueryDto);
+    
 }

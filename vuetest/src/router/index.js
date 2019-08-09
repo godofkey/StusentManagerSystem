@@ -74,12 +74,14 @@ export default new Router({
       component: TeacherHome,
       children:[
         {path:'/teacher/importgrade',component:ImportGrade},//添加成绩
-        {path:'/teacher/scoremanage',component:EnteringGrade},
+        {path:'/teacher/scoremanage',component:SourceManage},
         {path:'/teacher/teacherauthentication',component:TeacherAuthentication},
         {path:'/teacher/teacherchangepas',component:TeacherChangepas},
         {path:'/teacher/selectfail',component:SelectFail},
         {path:'/teacher/gradehorizontal',component:GradeHorizontal},
-        {path:'/teacher/gradelengthways',component:GradeLengthways}
+        {path:'/teacher/gradelengthways',component:GradeLengthways},
+        {path:'/teacher/studenthorizontal',component:StudentHorizontal},//学生成绩横向比较
+
       ]
     },
     {

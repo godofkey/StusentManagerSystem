@@ -48,8 +48,9 @@
 
 
 
-<script>
 
+
+<script >
   export default {
     data() {
       return {
@@ -98,15 +99,16 @@
 };
 </script>
 
-<style >
-.teacherauthentication {
-  text-align: left;
+<style lang="scss" >
+.teacherauthentication{
+    text-align: left;
+    .el-card{
+    margin:10px;
+    font-size: 20px;
+}
+
 }
 .el-tag {
   margin-right: 20px;
-}
-.el-card {
-  margin: 10px;
-  font-size: 20px;
 }
 </style>

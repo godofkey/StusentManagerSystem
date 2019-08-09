@@ -22,4 +22,7 @@ public class ScoreInfoQueryDto implements Serializable{
 	
 	private int examinationName;
 	
+	private String classId;
+	
+	private String courseId;
 }

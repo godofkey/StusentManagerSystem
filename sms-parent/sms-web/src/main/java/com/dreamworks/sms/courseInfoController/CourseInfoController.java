@@ -22,7 +22,7 @@ public class CourseInfoController {
 	@Autowired
 	private CourseInfoService courseInfoService;
 	
-	@RequestMapping(value = "/getCourseInfo",method = RequestMethod.POST)
+	@RequestMapping(value = "/getCourseInfo",method = RequestMethod.GET)
 	public JsonResult getClassInfo() {
 		List<CourseInfoDto> list = courseInfoService.getCourseInfo();
 		return new JsonResult(ResultCode.SUCCESS, "成功", list);
